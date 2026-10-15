@@ -18,6 +18,9 @@ jobs:
   build:
     runs-on: ubuntu-24.04
     timeout-minutes: 30
+    defaults:
+      run:
+        working-directory: templates
     outputs:
       version: ${{ steps.version.outputs.version }}
       release_date: ${{ steps.version.outputs.release_date }}
@@ -43,6 +46,7 @@ jobs:
         with:
           node-version: '22'
           cache: npm
+          cache-dependency-path: templates/package-lock.json
       - uses: shivammathur/setup-php@eb7c497e18156a6bbabfef1d3a82760b9eda3962 # v2
         with:
           php-version: '8.2'
@@ -72,8 +76,8 @@ jobs:
         with:
           name: test-output
           path: |
-            test-results/
-            playwright-report/
+            templates/test-results/
+            templates/playwright-report/
           retention-days: 7
       - name: Stop fixture
         if: always()
@@ -106,7 +110,7 @@ jobs:
           printf 'Extract `%s` into `lib/tpl/`, then select `cesa` in Configuration Manager.\n' "$archive" > notes.md
           printf '\nRelease date: %s. `cesa.tar.gz` is identical to the versioned archive.\n' "$RELEASE_DATE" >> notes.md
           printf '\n`dokuwiki.txt` contains the matching directory metadata.\n' >> notes.md
-          printf '\nOptional plugin repairs: [browser instructions](https://github.com/%s/blob/%s/cesa/compat/README.md).\n' "$GH_REPO" "$TAG" >> notes.md
+          printf '\nOptional plugin repairs: [browser instructions](https://github.com/%s/blob/%s/templates/cesa/compat/README.md).\n' "$GH_REPO" "$TAG" >> notes.md
           flags=()
           if [[ "$VERSION" == *-* ]]; then flags+=(--prerelease); fi
           if gh release view "$TAG" > /dev/null 2>&1; then
