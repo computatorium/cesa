@@ -220,9 +220,19 @@ test('reading, keyboard navigation, contents, hooks and native actions', async (
     await expect(page.locator('.cesa-skip')).toBeFocused();
     await page.keyboard.press('Enter');
     await expect(page.locator('#dokuwiki__content')).toBeFocused();
-    await page.locator('#dokuwiki__aside details').filter({ has: page.locator('#dw__toc') }).locator('summary').click();
-    await page.locator('#dw__toc a').filter({ hasText: /^Work$/ }).click();
-    await expect(page).toHaveURL(/#work$/);
+    for (const width of [1280, 390]) {
+        await page.setViewportSize({ width, height: 960 });
+        if (width === 390) await page.goto(url('start'));
+        const contents = page.locator('#dokuwiki__aside details').filter({ has: page.locator('#dw__toc') });
+        await contents.locator('summary').click();
+        await page.locator('#dw__toc a').filter({ hasText: /^Work$/ }).click();
+        await expect(page).toHaveURL(/#work$/);
+        await expect(contents).not.toHaveAttribute('open');
+        const nav = await page.locator('#dokuwiki__aside').boundingBox();
+        const heading = await page.locator('#work').boundingBox();
+        expect(heading.y).toBeGreaterThanOrEqual(nav.y + nav.height);
+    }
+    await page.setViewportSize({ width: 1280, height: 960 });
     const tools = page.locator('#dokuwiki__pagetools details');
     await tools.locator('summary').click();
     await expect(tools.locator('a')).not.toHaveCount(0);

@@ -252,11 +252,12 @@
             document.documentElement.style.setProperty('--navigation-offset', (aside && !site.classList.contains('cesa-rail-margin') ? aside.offsetHeight : 0) + 'px');
         }
         navigation();
+        // Let the browser follow the anchor before hiding its link.
         if (aside) aside.addEventListener('click', function (event) {
-            if (!site.classList.contains('cesa-rail-margin') && event.target.closest('a[href*="#"]')) {
+            if (!site.classList.contains('cesa-rail-margin') && event.target.closest('a[href*="#"]')) setTimeout(function () {
                 aside.querySelectorAll('details').forEach(function (details) { details.open = false; });
                 navigation();
-            }
+            }, 0);
         });
         addEventListener('resize', navigation);
         if (site) new ResizeObserver(navigation).observe(site);
