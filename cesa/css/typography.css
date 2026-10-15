@@ -1,0 +1,15 @@
+/* Screen and print share these local font stacks. */
+html {
+    --serif: Charter, "Bitstream Charter", Georgia, serif;
+    --sans: "Lucida Grande", "Segoe UI", "Trebuchet MS", Verdana, Arial, sans-serif;
+    --mono: "SFMono-Regular", Menlo, Consolas, "Liberation Mono", monospace;
+}
+button, input, select, textarea, option, optgroup { font-family: var(--sans); }
+code, pre, kbd, samp, #wiki__text, .diff { font-family: var(--mono); }
+.diff th, .ui-widget, .ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button { font-family: var(--sans); }
+/* The native uploader sets an inline Arial family on its file input. */
+input[type="file"] { font-family: var(--sans) !important; }
+/* The log viewer and MathJax set their own font families. */
+#plugin__logviewer dl dt .log span.file, #plugin__logviewer dl dd { font-family: var(--mono) !important; }
+#MathJax_Message, .MathJax_Menu, #MathJax_About, #MathJax_Help { font-family: var(--sans) !important; }
+.MathJax_MenuClose, #MathJax_HelpClose, .MathJax_Hover_Arrow { font-family: var(--mono) !important; }

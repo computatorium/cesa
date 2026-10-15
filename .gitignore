@@ -1,0 +1,13 @@
+/.dev/
+/.env
+__pycache__/
+/node_modules/
+/test-results/
+/playwright-report/
+/docs/verification-results.json.tmp
+/docs/screenshots/*
+!/docs/screenshots/light.png
+!/docs/screenshots/dark.png
+!/dist/
+!/dist/**
+.DS_Store

@@ -1,0 +1,17 @@
+{
+  "mort": {
+    "url": "https://codeload.github.com/dokuwiki/dokuwiki/tar.gz/refs/tags/release-2026-07-14c",
+    "sha256": "f28cb3ba632929f5e2652aa6f5264eb04330f43f74e3fce8a1cffdcbbf4f3549",
+    "version": "2026-07-14c Mort"
+  },
+  "wrap": {
+    "url": "https://codeload.github.com/selfthinker/dokuwiki_plugin_wrap/tar.gz/0fe74b4d407fca551e2bc1aefb19a5279d5cdd0d",
+    "sha256": "594e12b3be67509676740513de0cf3f8fbfba219e1e5eee899d2289eedc449aa",
+    "version": "2026-06-02 / 0fe74b4d407fca551e2bc1aefb19a5279d5cdd0d"
+  },
+  "mathjax": {
+    "url": "https://codeload.github.com/liffiton/dokuwiki-plugin-mathjax/tar.gz/607d91741b0d54854e67f76e21d110632736840c",
+    "sha256": "cd66a8418fd6349564b7ce5f8973dd07cf0e5aeb97902cf66c913e2018d45ad3",
+    "version": "2026-10-05 / 607d91741b0d54854e67f76e21d110632736840c"
+  }
+}

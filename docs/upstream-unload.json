@@ -1,0 +1,133 @@
+[
+  {
+    "template": "dokuwiki",
+    "keepDraft": false,
+    "renderedClass": "site dokuwiki mode_show tpl_dokuwiki loggedIn   showSidebar hasSidebar",
+    "browser": "27.2",
+    "errors": [
+      "/127.0.0.1:8088/lib/exe/ajax.php due to access control checks."
+    ],
+    "failedRequests": [
+      {
+        "url": "/doku.php",
+        "call": null,
+        "reason": "cancelled"
+      },
+      {
+        "url": "/lib/exe/js.php",
+        "call": null,
+        "reason": "cancelled"
+      },
+      {
+        "url": "/lib/mathjax/MathJax.js",
+        "call": null,
+        "reason": "cancelled"
+      },
+      {
+        "url": "/lib/exe/manifest.php",
+        "call": null,
+        "reason": "cancelled"
+      },
+      {
+        "url": "/lib/tpl/dokuwiki/images/logo.png",
+        "call": null,
+        "reason": "cancelled"
+      },
+      {
+        "url": "/lib/exe/jquery.php",
+        "call": null,
+        "reason": "cancelled"
+      },
+      {
+        "url": "/lib/exe/css.php",
+        "call": null,
+        "reason": "cancelled"
+      }
+    ]
+  },
+  {
+    "template": "dokuwiki",
+    "keepDraft": true,
+    "renderedClass": "site dokuwiki mode_show tpl_dokuwiki loggedIn   showSidebar hasSidebar",
+    "browser": "27.2",
+    "errors": [],
+    "failedRequests": [
+      {
+        "url": "/doku.php",
+        "call": null,
+        "reason": "cancelled"
+      },
+      {
+        "url": "/lib/mathjax/MathJax.js",
+        "call": null,
+        "reason": "cancelled"
+      },
+      {
+        "url": "/lib/exe/manifest.php",
+        "call": null,
+        "reason": "cancelled"
+      },
+      {
+        "url": "/lib/tpl/dokuwiki/images/logo.png",
+        "call": null,
+        "reason": "cancelled"
+      },
+      {
+        "url": "/lib/exe/jquery.php",
+        "call": null,
+        "reason": "cancelled"
+      },
+      {
+        "url": "/lib/exe/css.php",
+        "call": null,
+        "reason": "cancelled"
+      },
+      {
+        "url": "/lib/exe/js.php",
+        "call": null,
+        "reason": "cancelled"
+      }
+    ]
+  },
+  {
+    "template": "cesa",
+    "keepDraft": false,
+    "renderedClass": "site dokuwiki mode_show tpl_cesa loggedIn cesa-has-rail",
+    "browser": "27.2",
+    "errors": [
+      "/127.0.0.1:8088/lib/exe/ajax.php due to access control checks."
+    ],
+    "failedRequests": [
+      {
+        "url": "/lib/exe/jquery.php",
+        "call": null,
+        "reason": "cancelled"
+      },
+      {
+        "url": "/lib/exe/js.php",
+        "call": null,
+        "reason": "cancelled"
+      },
+      {
+        "url": "/lib/exe/css.php",
+        "call": null,
+        "reason": "cancelled"
+      },
+      {
+        "url": "/lib/mathjax/MathJax.js",
+        "call": null,
+        "reason": "cancelled"
+      },
+      {
+        "url": "/lib/exe/manifest.php",
+        "call": null,
+        "reason": "cancelled"
+      },
+      {
+        "url": "/lib/exe/taskrunner.php",
+        "call": null,
+        "reason": "cancelled"
+      }
+    ]
+  }
+]

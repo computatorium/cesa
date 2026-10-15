@@ -1,0 +1,17 @@
+services:
+  wiki:
+    build:
+      context: .
+      dockerfile: tools/Dockerfile
+    user: "${CESA_UID:-1000}:${CESA_GID:-1000}"
+    ports:
+      - "127.0.0.1:8088:8088"
+    environment:
+      PHP_CLI_SERVER_WORKERS: "4"
+    healthcheck:
+      test: ["CMD", "php", "-r", "exit(@fsockopen('127.0.0.1', 8088) ? 0 : 1);"]
+      interval: 1s
+      timeout: 2s
+      retries: 30
+    volumes:
+      - .:/workspace

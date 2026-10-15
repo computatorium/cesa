@@ -1,0 +1,20 @@
+@page { margin: 18mm; }
+* { box-sizing: border-box; }
+html, body { background: white !important; color: black !important; margin: 0; font: 11pt/1.5 var(--serif); }
+#dokuwiki__header, #dokuwiki__aside, #dokuwiki__pagetools, #dokuwiki__footer, .cesa-skip, .a11y, .secedit, .code-copy-btn, body > .no, #dw__toc, #tool__bar, .editBar { display: none !important; }
+#dokuwiki__site, #dokuwiki__top, .cesa-layout, #dokuwiki__content, .page { display: block; width: auto; max-width: none; margin: 0; padding: 0; }
+.cesa-appearance, .cesa-select-trigger, .cesa-select-options, .cesa-tree-toggle { display: none !important; }
+h1, h2, h3, h4 { break-after: avoid; line-height: 1.2; }
+h1 { font-size: 24pt; } h2 { font-size: 18pt; } h3 { font-size: 14pt; }
+p, li { orphans: 3; widows: 3; }
+a, a:visited { color: black; text-decoration: none; overflow-wrap: anywhere; }
+a.urlextern::after { content: " (" attr(href) ")"; font-size: 9pt; }
+img, svg { max-width: 100% !important; height: auto; break-inside: avoid; }
+pre, code, kbd, samp { font: 9pt/1.4 var(--mono); white-space: pre-wrap; overflow-wrap: anywhere; }
+pre, blockquote { padding: .6em; border: 1px solid #aaa; }
+.table, .MathJax_Display, mjx-container { overflow: visible; max-width: 100%; }
+table { border-collapse: collapse; font-size: 9pt; width: 100%; table-layout: fixed; overflow-wrap: anywhere; }
+th, td { border: 1px solid #aaa; padding: .4em; text-align: start; }
+thead { display: table-header-group; } tr { break-inside: avoid; }
+.footnotes { border-top: 1px solid #aaa; margin-top: 2em; font-size: 9pt; }
+.preview { max-width: none; }

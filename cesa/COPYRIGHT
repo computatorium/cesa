@@ -1,0 +1,9 @@
+Cesa, 2026, Malcolm. Licensed under GPL-2.0-only.
+
+The main, image detail and media manager templates derive from the Mort default template:
+Copyright DokuWiki contributors, including Anika Henke, Clarence Lee,
+and Andreas Gohr. Original default template and media entry points are
+licensed under GPL 2. See https://github.com/dokuwiki/dokuwiki/tree/release-2026-07-14c/lib/tpl/dokuwiki
+
+The bundled GPL license text is from that upstream distribution.
+The small fallback logo was created for Cesa.

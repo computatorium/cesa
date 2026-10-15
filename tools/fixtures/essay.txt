@@ -1,0 +1,35 @@
+====== On keeping a notebook ======
+
+A notebook entry needs enough context to be read later. Record the conditions of a measurement beside its result. For reading notes, keep the source beside the quotation so a reader can check it.((Record the edition and page number as well as the title.))
+
+===== Context =====
+
+Consider an entry that says, "The second run took 12 seconds." It records a result but leaves several questions open. What was run? Was the input the same? Did the first run include work that the second run could reuse? The number becomes useful when the entry also records the command, input size, and timing method.
+
+Keep observations separate from explanations. "The process stopped after the file was renamed" describes a sequence. "Renaming the file caused the process to stop" proposes a cause. The second statement needs another check, such as repeating the rename while holding the other conditions fixed. A note can preserve both statements without presenting them as equally established.
+
+Record failures close to the work that produced them. A command copied from a working shell can differ from the command remembered an hour later. An error message may contain a file name or line number needed to reproduce the failure. Copy the relevant output and explain what was attempted immediately before it appeared.
+
+Choose the amount of detail according to the question. A shopping list does not need a method section. A comparison of two measurements does need enough detail to explain whether they are comparable. If the note depends on a setting, include that setting. If a detail has no bearing on the result or its interpretation, it can usually be left out.
+
+Dates help when the subject changes. A page about an installed program should identify the version that was checked. A link to a changing document may need an access date or a saved copy. These details put a limit on the claim: the entry describes what was observed under those conditions, at that time.
+
+===== Connections =====
+
+A link should explain why the destination is relevant. In [[bookmarks|a reading list]], a short description can distinguish a reference manual from a tutorial. On an experiment page, a link to the previous attempt can explain which variable changed. Readers should not have to open every linked page to discover what relationship the writer intended.
+
+Use names that distinguish nearby subjects. "Notes" is a poor title if the collection contains dozens of unrelated notes. "Camera exposure tests" gives a reader something to search for. If that page grows to cover two cameras, separate pages can keep each camera's results readable, with a shared index linking to both sets of results.
+
+Some duplication helps a page stand on its own. Repeating the unit beside a table column avoids sending readers elsewhere to interpret a value. Copying a long procedure into several pages creates a different problem: later corrections can leave the copies inconsistent. Put the procedure in one place and record which version each experiment followed.
+
+> See the [[bookmarks|reading list]] for the nLab and DokuWiki links.
+
+An index can be small. A few links under specific headings may be enough for a personal collection. Add another level when the current page becomes difficult to scan, or when distinct groups need different context. An elaborate hierarchy built before the material exists can make every new entry a filing decision.
+
+Questions deserve entries too. Write down what is unknown and what observation would help settle it. "Does this result change with a larger input?" suggests a test. "Investigate performance" does not specify one. A question with a proposed check gives the next session a place to begin.
+
+===== Return =====
+
+When revisiting an entry, check whether its assumptions still apply. A command may have changed. A source may have been corrected. If new evidence changes the conclusion, explain the change beside the old claim or link to a dated follow-up. Silent replacement can make an earlier result difficult to interpret.
+
+Remove material that no longer serves the page. A resolved question may belong in the explanation of the result. A long sequence of abandoned attempts may be clearer as a short account of the failure that mattered. Keep enough evidence to support the conclusion and enough context to repeat the work.
