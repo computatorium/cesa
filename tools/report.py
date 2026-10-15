@@ -99,6 +99,7 @@ report = {
     'recorded_utc': datetime.now(timezone.utc).isoformat(),
     'platform': platform.platform(), 'php': php,
     'browsers': versions, 'sources': json.loads((ROOT / 'tools/sources.json').read_text()),
+    'plugin_patches': {file.name: sha(file.read_bytes()) for file in sorted((ROOT / 'cesa/compat').glob('*.patch'))},
     'playwright': json.loads((ROOT / 'node_modules/@playwright/test/package.json').read_text())['version'],
     'optional_mathjax_runtime': '2.7.9 (development only)',
     'installation': 'Extracted release archive, verified against source and per-test provenance',

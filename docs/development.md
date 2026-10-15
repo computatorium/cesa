@@ -1,6 +1,6 @@
 # development
 
-Requires Python 3.12+, Node.js 20+, host PHP for password hashing and fixture seeding, and Docker Compose. The container supplies PHP 8.2 with GD and mbstring.
+Requires Python 3.12+, Node.js 20+, `patch`, host PHP for password hashing and fixture seeding, and Docker Compose. The container supplies PHP 8.2 with GD and mbstring.
 
 ```sh
 npm ci
@@ -13,7 +13,7 @@ python3 tools/check.py
 
 Open <http://127.0.0.1:8088>. Fixture accounts are `reader`, `editor`, `editor2`, and `admin`, all with password `cesa-test-only`. Anonymous users read public pages; readers also see `private:*`; editors can edit/upload; administrators manage the wiki. This fixture is disposable and must stay on loopback.
 
-Bootstrap verifies the downloads pinned in `tools/sources.json`, seeds through DokuWiki's storage/index APIs, and links `cesa/` into the wiki. It writes local user/group IDs to ignored `.env` settings so container writes remain owned by the host user. `--without-plugins` omits Wrap and MathJax. `--reset` replaces `.dev/wiki`; it refuses to overwrite an existing fixture without that flag.
+Bootstrap verifies the downloads pinned in `tools/sources.json`, applies the Confmanager/Hiding IPs compatibility patches, seeds through DokuWiki's storage/index APIs, and links `cesa/` into the wiki. It writes local user/group IDs to ignored `.env` settings so container writes remain owned by the host user. `--without-plugins` omits all optional plugins. `--reset` replaces `.dev/wiki`; it refuses to overwrite an existing fixture without that flag.
 
 Tests create isolated page IDs and restore temporary configuration. Do not run two test suites against the same fixture at once. Results, traces, and screenshots are written to ignored development directories. Configuration replacement happens inside the container to avoid bind-mount races. `CESA_URL` selects a local endpoint; `CESA_CHROMIUM_EXECUTABLE`, `CESA_FIREFOX_EXECUTABLE`, and `CESA_WEBKIT_EXECUTABLE` select browser binaries.
 

@@ -101,6 +101,7 @@ jobs:
           sha256sum --check SHA256SUMS
           archive="cesa-$VERSION.tar.gz"
           printf 'Extract `%s` into `lib/tpl/`, then select `cesa` in Configuration Manager.\n' "$archive" > notes.md
+          printf '\nOptional plugin patches: [instructions](https://github.com/%s/blob/%s/cesa/compat/README.md).\n' "$GH_REPO" "$TAG" >> notes.md
           flags=()
           if [[ "$VERSION" == *-* ]]; then flags+=(--prerelease); fi
           if gh release view "$TAG" > /dev/null 2>&1; then

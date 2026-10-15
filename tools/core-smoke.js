@@ -4,7 +4,7 @@ const fs = require('node:fs/promises');
 const { base } = require('./fixture');
 
 (async () => {
-    for (const name of ['wrap', 'mathjax']) {
+    for (const name of Object.keys(require('./sources.json')).filter(name => name !== 'mort')) {
         if (await fs.stat(`.dev/wiki/lib/plugins/${name}`).catch(() => null)) throw new Error(`Remove ${name}: this check requires --without-plugins.`);
     }
     for (const [name, type] of Object.entries({ chromium, firefox, webkit })) {

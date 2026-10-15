@@ -9,6 +9,26 @@
     "sha256": "594e12b3be67509676740513de0cf3f8fbfba219e1e5eee899d2289eedc449aa",
     "version": "2026-06-02 / 0fe74b4d407fca551e2bc1aefb19a5279d5cdd0d"
   },
+  "linkfavicon": {
+    "url": "https://codeload.github.com/shaoyanmin/linkfavicon/tar.gz/a7499042b7c8e37eaae56eaa31451edc9a968704",
+    "sha256": "6ff51809186075d55b11fd0720c5df3b678bd4ba01c15df05d99356543f87392",
+    "version": "2024-10-27 / a7499042b7c8e37eaae56eaa31451edc9a968704"
+  },
+  "cmsmode": {
+    "url": "https://codeload.github.com/cosmocode/dokuwiki-plugin-cmsmode/tar.gz/5249b761d6303fb760f846a97f110282c09b2ecc",
+    "sha256": "d66f65fe8a40adcfa926e38f48b0892e19321fa5ede67ad74222cdf2005466f8",
+    "version": "2023-08-16 / 5249b761d6303fb760f846a97f110282c09b2ecc"
+  },
+  "confmanager": {
+    "url": "https://codeload.github.com/cosmocode/confmanager/tar.gz/1b5b7c23c39a6cc32d8e1f1eefcd1818d80207ae",
+    "sha256": "e4cb51d5cbdb44abdb8b0be6bd6d8dbfdc5c7510d8975d8e5f5c4dee18815901",
+    "version": "2023-07-08 / 1b5b7c23c39a6cc32d8e1f1eefcd1818d80207ae"
+  },
+  "hidingip": {
+    "url": "https://codeload.github.com/hokkaidoperson/DokuWiki-HidingIP-Plugin/tar.gz/d5a1331cece8b0cbb5f3d8cb49162bd83a808086",
+    "sha256": "036eece90c6937369b1628f8ef96b9a4cf6189160d99a27445e755f006f09758",
+    "version": "2018-11-05 / d5a1331cece8b0cbb5f3d8cb49162bd83a808086"
+  },
   "mathjax": {
     "url": "https://codeload.github.com/liffiton/dokuwiki-plugin-mathjax/tar.gz/607d91741b0d54854e67f76e21d110632736840c",
     "sha256": "cd66a8418fd6349564b7ce5f8973dd07cf0e5aeb97902cf66c913e2018d45ad3",

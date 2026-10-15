@@ -42,6 +42,9 @@ a[href]:hover { background-color: var(--highlight) !important; color: var(--text
 a.wikilink1 { color: var(--existing); }
 a.wikilink1:visited { color: var(--visited); }
 a.wikilink2, a.wikilink2:visited { color: var(--missing); }
+.dokuwiki a:is(.interwiki, .mediafile, [data-linkfavicon]), #extension__list .linkbar a:is(.bugs, .donate) { padding-inline-start: 1.4em; background-repeat: no-repeat; background-position: left center; background-size: 1em 1em; }
+.dokuwiki a:is(.interwiki, .mediafile, [data-linkfavicon]):dir(rtl), #extension__list .linkbar a:is(.bugs, .donate):dir(rtl) { background-position: right center; }
+.dokuwiki a[data-linkfavicon] { background-color: transparent; background-blend-mode: normal; transition: none; }
 :focus-visible { outline: 2px solid var(--link); outline-offset: 3px; }
 ::selection { background: var(--highlight); color: var(--text); }
 img, video, svg { max-width: 100%; }
@@ -330,7 +333,7 @@ div.success { background: var(--added); }
 .ui-admin .icon svg { width: 1.5rem; height: 1.5rem; }
 #admin__version { color: var(--muted); font-size: .85rem; }
 /* Override fixed light plugin colors using the template's semantic palette. */
-#config__manager fieldset, #config__manager td, #config__manager tr, #config__manager .selection, #acl__manager table, #acl__manager td, #usermanager__table tr { background: var(--bg); color: var(--text); }
+#config__manager fieldset, #config__manager td, #config__manager tr, #config__manager .selection, #acl_manager table, #acl_manager td, #usermanager__table tr { background: var(--bg); color: var(--text); }
 #config__manager fieldset { margin-inline: 0; }
 #config__manager fieldset td.value { width: 55%; }
 #config__manager td input.edit, #config__manager td textarea.edit { max-width: 100%; }
@@ -344,10 +347,52 @@ div.success { background: var(--added); }
 #config__manager tr.protected input, #config__manager tr.protected textarea, #config__manager tr.protected select,
 #config__manager tr.protected .input, #config__manager tr.protected .selection { background-color: var(--deleted) !important; color: var(--text) !important; }
 #config__manager .missing { background: var(--deleted); color: var(--text); }
-#acl__manager { max-width: 100%; overflow: auto; }
-#acl__manager .aclform { background: var(--surface); color: var(--text); }
+#acl_manager { max-width: 100%; }
+#acl__tree, #acl__detail { height: 20rem; border-color: var(--border); }
+#acl__tree { width: 30%; padding: var(--space-2); }
+#acl__tree a { display: inline-block; padding-block: var(--space-1); }
+#acl__tree a.cur { background: var(--highlight); color: var(--text); }
+#acl__tree img { vertical-align: middle; }
+#acl__detail { width: 68%; }
+#acl__detail fieldset { width: 100%; }
+#acl__detail #acl__user { border-color: var(--border); }
+#acl_manager table { margin-inline: 0; width: 100%; }
+#acl_manager table td:nth-child(3) { min-width: 14rem; }
+#acl_manager table tr:hover { background: var(--surface); }
+#acl_manager label { display: inline-flex; align-items: center; gap: .35em; white-space: nowrap; margin-inline-end: var(--space-3); }
 #usermanager__table { display: block; overflow-x: auto; }
 #extension__manager .extension { background: var(--bg); border-color: var(--border); }
+#extension__manager .panelHeader { background: var(--surface); color: var(--text); padding: var(--space-2); }
+#extension__manager ul.tabs li.active a { background: var(--surface); border-color: var(--border); }
+#extension__list section.extension { grid-template-columns: minmax(0, 5rem) minmax(0, 1fr); gap: var(--space-2); padding-block: var(--space-3); }
+#extension__list section.extension > .screenshot { grid-column: 1; grid-row: 1; padding: 0; margin: 0; }
+#extension__list section.extension > .screenshot .id { position: static; display: block; background: var(--surface); color: var(--muted); }
+#extension__list section.extension > .main { grid-column: 2; grid-row: 1; min-width: 0; min-height: 0; padding: 0; }
+#extension__list section.extension > .main > h2 { flex-wrap: wrap; gap: var(--space-1) var(--space-3); margin: 0 0 var(--space-2); }
+#extension__list section.extension > .actions { grid-column: 2; grid-row: 2; flex-direction: row; flex-wrap: wrap; align-items: center; padding: 0; }
+#extension__list section.extension > .actions .available .version { background: transparent; color: var(--link); }
+#extension__list section.extension > .notices { grid-column: ~"1 / -1"; grid-row: 3; padding: 0; }
+#extension__list section.extension > .details { grid-column: ~"1 / -1"; grid-row: 4; }
+#extension__list section.extension > .details details summary { float: none; margin: 0; color: var(--link); min-height: var(--control-height); }
+#extension__list section.extension > .details details dl { grid-template-columns: minmax(0, 6rem) minmax(0, 1fr); }
+#extension__list section.extension.installed.disabled .main, #extension__list section.extension.installed.disabled .details { opacity: 1; }
+#confmanager div.level1, #confmanager .formControl { background: var(--bg); color: var(--text); border-color: var(--border); border-radius: .1875rem; box-shadow: none; padding: var(--space-3); margin-block-end: var(--space-4); }
+.dokuwiki #confmanager div.table { overflow-x: auto; }
+#confmanager table { width: 100%; margin-block-end: var(--space-4); }
+#confmanager th { white-space: nowrap; }
+#confmanager table th:last-child, #confmanager table td:last-child { min-width: 6rem; }
+#confmanager div.table td div { width: auto; min-width: 10rem; max-width: 24rem; }
+#confmanager .defaultValue, #confmanager .overriddenValue, #confmanager .heading_appendix { color: var(--muted); }
+#confmanager tr.overridden { background: var(--surface); }
+#confmanager .saveButton { background-position: .5em center; background-size: 1em; padding-inline-start: 2em; }
+#confmanager .saveButton:dir(rtl) { background-position: right .5em center; }
+#confmanager .popup { width: ~"min(24rem, calc(100vw - 2rem))"; max-height: ~"calc(100dvh - 2rem)"; overflow: auto; background: var(--bg); color: var(--text); border: 1px solid var(--border); border-radius: .1875rem; }
+#confmanager .popupheader, #confmanager .popupcontent { background: var(--bg); color: var(--text); padding: var(--space-4); }
+#confmanager .popupheader { background: var(--surface); border-radius: 0; }
+#confmanager .noscript { color: var(--text); background: var(--deleted); border-color: var(--missing); box-shadow: none; }
+#confmanager .progress { border-color: var(--border); }
+#confmanager .progress .bar { background: var(--link); }
+#plugin__logviewer .file, #plugin__logviewer dd { font-family: var(--mono); }
 #media__manager { display: grid; grid-template-columns: 13rem minmax(0, 1fr); gap: 1.5rem; padding: 1.2rem; }
 #media__manager > .error, #media__manager > .success, #media__manager > .info { grid-column: ~"1 / -1"; }
 #mediamgr__aside, #mediamgr__content { min-width: 0; }
@@ -479,3 +524,7 @@ summary::before, #index__tree a.idx_dir::before, #media__tree .cesa-tree-toggle,
     .dokuwiki .wrap_left, .dokuwiki .wrap_right, .dokuwiki .wrap_column { float: none; width: auto !important; margin-inline: 0; }
 }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; animation-duration: 0s !important; transition-duration: 0s !important; } }
+@media (max-width: 48rem) {
+    #acl__tree, #acl__detail { float: none; width: 100%; height: auto; }
+    #acl__tree { max-height: 16rem; margin-block-end: var(--space-3); }
+}

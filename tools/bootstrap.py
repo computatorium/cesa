@@ -15,7 +15,7 @@ DEV = ROOT / '.dev'
 parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument('--reset', action='store_true', help='Delete and recreate .dev/wiki')
 parser.add_argument('--archive', type=Path, help='Install a release archive instead of linking cesa/')
-parser.add_argument('--without-plugins', action='store_true', help='Skip Wrap and MathJax')
+parser.add_argument('--without-plugins', action='store_true', help='Skip optional plugins')
 parser.add_argument('--php', default='php', help='PHP binary for password generation and seeding')
 args = parser.parse_args()
 wiki = DEV / 'wiki'
@@ -67,6 +67,9 @@ else:
     tpl.symlink_to(os.path.relpath(ROOT / 'cesa', tpl.parent), target_is_directory=True)
 
 if not args.without_plugins:
+    for name, patch in [('confmanager', 'confmanager-php82.patch'), ('hidingip', 'hidingip-mort.patch')]:
+        subprocess.run(['patch', '-p1', '-F0', '-t', '-i', str((tpl / 'compat' / patch).resolve())],
+                       cwd=wiki / 'lib/plugins' / name, check=True)
     math = ROOT / 'node_modules/mathjax'
     if not math.exists():
         raise SystemExit('Run npm ci first (local MathJax is a development dependency).')
@@ -103,6 +106,9 @@ $conf['locktime'] = 300;
 $conf['cachetime'] = 0;
 $conf['plugin']['mathjax']['url'] = '/lib/mathjax/MathJax.js?config=TeX-AMS_CHTML';
 ''')
+if not args.without_plugins:
+    with (wiki / 'conf/local.php').open('a') as local:
+        local.write("$conf['renderer_xhtml'] = 'linkfavicon';\n$conf['plugin']['cmsmode']['actions'] = '';\n")
 shutil.copyfile(ROOT / 'tools/router.php', wiki / 'router.php')
 (wiki / 'conf/report_e_all').touch()
 seed = subprocess.run([args.php, str(ROOT / 'tools/seed.php'), str(wiki)], capture_output=True, text=True, check=True)

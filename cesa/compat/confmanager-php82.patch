@@ -1,0 +1,11 @@
+--- a/configTypes/ConfigManagerTwoLine.php
++++ b/configTypes/ConfigManagerTwoLine.php
+@@ -19,7 +19,7 @@
+      * @param string $description Config file description
+      * @param string $configFile config files
+      */
+-    function __construct($name, $description = '', $configFile) {
++    function __construct($name, $description, $configFile) {
+         $this->configFile = $configFile;
+         $this->description = $description;
+         $this->name = $name;

@@ -11,7 +11,7 @@ $_SERVER['REMOTE_USER'] = 'admin';
 $INFO['userinfo'] = ['name' => 'Admin', 'mail' => 'cesa-admin@example.invalid', 'grps' => ['admin']];
 $pages = [
     'public:start' => "====== Public notebook ======\n\nA public namespace, readable without an account. See [[start|the home page]].\n",
-    'sidebar' => "  * [[start|Home]]\n  * [[essay|On keeping a notebook]]\n  * [[bookmarks|Bookmarks]]\n  * [[notes:start|Everyday notes]]\n  * [[technical|Technical reference]]\n  * [[plugins|Wrap & mathematics]]\n  * [[rtl|Languages]]\n",
+    'sidebar' => "  * [[start|Home]]\n  * [[essay|On keeping a notebook]]\n  * [[bookmarks|Bookmarks]]\n  * [[notes:start|Everyday notes]]\n  * [[technical|Technical reference]]\n  * [[plugins|Wrap & mathematics]]\n  * [[rtl|Languages]]\n  * [[https://www.dokuwiki.org/|DokuWiki]]\n",
     'start' => "====== Notebook ======\n\nExample pages for testing Cesa.\n\n===== Read =====\n\n[[essay|On keeping a notebook]] covers sources and reproducible records.\n\n[[bookmarks|Bookmarks]] contains external links and nested lists.\n\n===== Work =====\n\n[[notes:start|Everyday notes]] contains short entries. [[technical|Technical reference]] includes code, tables, and images.\n\n===== Explore =====\n\n[[plugins|Mathematics and callouts]], [[rtl|writing directions]], and [[missing_page|a missing page]].\n\nThis sentence has a footnote.((Footnotes link back to the referring sentence.))\n",
     'essay' => file_get_contents(__DIR__ . '/fixtures/essay.txt'),
     'bookmarks' => "====== Bookmarks ======\n\nA short list, arranged as ordinary wiki content.\n\n===== Reading =====\n\n  * [[https://ncatlab.org/nlab/show/HomePage|nLab]] — mathematics as an interconnected notebook.\n  * [[https://wiki.c2.com/|WikiWikiWeb]] — simple pages and conversations.\n  * [[https://www.gutenberg.org/|Project Gutenberg]] — books to keep returning to.\n    * [[https://www.gutenberg.org/ebooks/author/37|Montaigne]] — essays.\n\n===== Making =====\n\n  * [[technical|Technical reference]]\n  * [[https://www.dokuwiki.org/|DokuWiki]]\n  * https://example.org/" . str_repeat('a-long-path-segment/', 20) . "\n\n===== Later =====\n\n  - Return to the [[essay|notebook essay]].\n  - Follow one link, then add a sentence about it.\n",
@@ -23,10 +23,19 @@ $pages = [
     'plugins' => '====== Wrap & mathematics ======' . "\n\nBoth extensions are optional. This page is also used for repeated editor previews.\n\n===== Callouts =====\n\n<WRAP info>\nAn information callout with a [[technical|reference link]].\n</WRAP>\n\n<WRAP important>\nAn important callout uses a colored start border.\n</WRAP>\n\n<WRAP columns>\nA paragraph in the first column.\n\nA paragraph in the second column.\n</WRAP>\n\n===== Inline mathematics =====\n\n" . 'For $x \in \mathbb{R}$, the identity $e^{i\pi}+1=0$ connects familiar constants.' . "\n\n===== Display mathematics =====\n\n" . '$$\int_0^1 x^2\,dx = \frac{1}{3}$$' . "\n\n" . '$$\underbrace{a_1+a_2+a_3+a_4+a_5+a_6+a_7+a_8+a_9+a_{10}+a_{11}+a_{12}}_{\text{a long expression that can scroll on a phone}}=\sum_{i=1}^{12}a_i$$' . "\n",
     'rtl' => "====== Languages ======\n\n===== العربية =====\n\n<WRAP :ar>\nهذه ملاحظات قصيرة عن القراءة والكتابة. يمكن أن تبدأ الفكرة بسؤال صغير، ثم تنمو مع مرور الوقت.\n</WRAP>\n\n===== עברית =====\n\n<WRAP :he>\nמחברת היא מקום לשאלות, לרעיונות ולדברים שכדאי לזכור.\n</WRAP>\n\n===== English =====\n\nWriting directions can coexist on the same page.\n",
     'history' => "====== History fixture ======\n\nAn earlier sentence.\n",
+    'privacy' => "====== Public revision ======\n\nAn initial sentence.\n",
 ];
 foreach ($pages as $id => $text) saveWikiText($id, $text, 'Seed Cesa fixtures');
 sleep(1);
 saveWikiText('history', "====== History fixture ======\n\nA revised sentence with a clear summary.\n", 'Clarify the history fixture');
+$_SERVER['REMOTE_USER'] = '';
+$_SERVER['REMOTE_ADDR'] = '203.0.113.17';
+saveWikiText('privacy', "====== Public revision ======\n\nA sentence from an anonymous editor.\n", 'Anonymous revision');
+sleep(1);
+$_SERVER['REMOTE_ADDR'] = '2001:db8::17';
+saveWikiText('privacy', "====== Public revision ======\n\nAnother sentence from an anonymous editor.\n", 'IPv6 anonymous revision');
+$_SERVER['REMOTE_USER'] = 'admin';
+$_SERVER['REMOTE_ADDR'] = '127.0.0.1';
 // Generate a deterministic PNG without an image-library dependency.
 $width = 640; $height = 240; $pixels = '';
 for ($y = 0; $y < $height; $y++) {
@@ -42,4 +51,4 @@ io_saveFile(mediaFN('landscape.png'), $png);
 io_saveFile(mediaFN('private:landscape.png'), $png);
 $indexer = new \dokuwiki\Search\Indexer();
 foreach (array_keys($pages) as $id) $indexer->addPage($id);
-echo "Seeded " . count($pages) . " pages, two history revisions, and public/private copies of one image.\n";
+echo "Seeded " . count($pages) . " pages, revision history, and public/private copies of one image.\n";

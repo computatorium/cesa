@@ -10,6 +10,12 @@ async function setAppearance(page, mode) {
     await page.locator('.cesa-appearance summary').click();
     await page.locator(`.cesa-appearance button[data-appearance="${mode}"]`).click();
 }
+async function localFavicons(context) {
+    await context.route('https://www.faviconextractor.com/favicon/**', route => route.fulfill({
+        contentType: 'image/svg+xml',
+        body: '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"><rect width="16" height="16" fill="#315c9e"/></svg>',
+    }));
+}
 
 async function login(page, user = 'editor') {
     await page.goto(url('start', 'login'));
@@ -190,6 +196,7 @@ test('custom selects preserve keyboard, pointer, multiple values, core changes a
 });
 
 test.beforeEach(async ({ page, browser }, testInfo) => {
+    await localFavicons(page.context());
     await testInfo.attach('cesa-verification-context', { body: JSON.stringify(evidence(browser)), contentType: 'application/json' });
     page.errors = [];
     page.on('pageerror', error => page.errors.push(error.message));
@@ -366,6 +373,7 @@ test('enlarged text, touch controls, open menus and whole-shell RTL reflow', asy
         }
     }
     const context = await browser.newContext({ baseURL: base, hasTouch: true, viewport: { width: 1280, height: 960 } });
+    await localFavicons(context);
     const touch = await context.newPage();
     await touch.goto(url('start'));
     expect(await touch.evaluate(() => matchMedia('(pointer: coarse)').matches)).toBe(true);
@@ -480,6 +488,7 @@ test('blocked browser storage still allows appearance and navigation', async ({ 
 
 test('no JavaScript: reading, disclosure navigation, login and server preview/save', async ({ browser }, testInfo) => {
     const context = await browser.newContext({ javaScriptEnabled: false, colorScheme: 'dark', baseURL: base, viewport: { width: 390, height: 844 } });
+    await localFavicons(context);
     const p = await context.newPage();
     await p.goto(url('start'));
     await expect(p.locator('.page h1')).toBeVisible();
@@ -754,6 +763,7 @@ test('native draft refresh, recovery, unsaved warning and locks', async ({ page,
     await attempted;
     await expect(page.locator('#wiki__text')).toHaveValue(/Recover this unsaved text/);
     const otherContext = await browser.newContext({ baseURL: base });
+    await localFavicons(otherContext);
     const other = await otherContext.newPage();
     await login(other, 'editor2');
     await other.goto(url(id, 'edit'));
@@ -779,6 +789,7 @@ test('conflicting edits retain both versions until the user decides', async ({ p
     await page.goto(url(id, 'edit'));
     await page.locator('#wiki__text').fill('====== Conflict ======\n\nFirst editor unsaved.\n');
     const context = await browser.newContext({ baseURL: base });
+    await localFavicons(context);
     const second = await context.newPage();
     await login(second);
     // Same user may edit from another device; force a different saved revision time.
@@ -953,6 +964,183 @@ test('highlighted code and native feedback keep readable palette contrast', asyn
         });
         expect(ratios.length).toBeGreaterThan(4);
         for (const { token, ratio } of ratios) expect(ratio, `${appearance} ${token}`).toBeGreaterThanOrEqual(4.5);
+    }
+});
+
+test('linkfavicon icons stay single, spaced and readable in content, navigation and preview', async ({ page }, testInfo) => {
+    await page.goto(url('bookmarks'));
+    const link = page.locator('.page a[data-linkfavicon]').first();
+    await expect.poll(() => link.evaluate(e => getComputedStyle(e).backgroundImage)).toContain('faviconextractor');
+    for (const width of [390, 1280]) {
+        await page.setViewportSize({ width, height: 960 });
+        for (const appearance of ['light', 'dark']) {
+            await setAppearance(page, appearance);
+            for (const icon of [link, page.locator('#dokuwiki__aside a[data-linkfavicon]').first()]) {
+                await expect(icon).toHaveCSS('background-repeat', 'no-repeat');
+                await expect(icon).toHaveCSS('background-blend-mode', 'normal');
+                await expect(icon).toHaveCSS('background-color', 'rgba(0, 0, 0, 0)');
+                const sizes = await icon.evaluate(e => {
+                    const css = getComputedStyle(e);
+                    return { font: parseFloat(css.fontSize), icon: parseFloat(css.backgroundSize), padding: parseFloat(css.paddingInlineStart) };
+                });
+                expect(sizes.icon).toBeCloseTo(sizes.font, 1);
+                expect(sizes.padding).toBeGreaterThan(sizes.icon);
+            }
+            const image = await link.evaluate(e => getComputedStyle(e).backgroundImage);
+            await link.hover();
+            await expect(link).toHaveCSS('background-image', image);
+            await expect(link).not.toHaveCSS('background-color', 'rgba(0, 0, 0, 0)');
+            await page.mouse.move(0, 0);
+            await noOverflow(page);
+            if (testInfo.project.name === 'chromium') await page.screenshot({ path: `docs/screenshots/chromium-linkfavicon-${width}-${appearance}.png` });
+        }
+    }
+    await page.locator('html').evaluate(e => e.dir = 'rtl');
+    await expect(link).toHaveCSS('background-position', '100% 50%');
+    await noOverflow(page);
+    await login(page);
+    const id = uid(testInfo, 'favicon');
+    await page.goto(url(id, 'edit'));
+    await page.locator('#wiki__text').fill('[[https://example.org/|A preview with an icon]]');
+    await page.locator('#edbtn__preview').click();
+    const preview = page.locator('.preview a[data-linkfavicon]');
+    await expect(preview).toHaveCSS('background-repeat', 'no-repeat');
+    await expect.poll(() => preview.evaluate(e => getComputedStyle(e).backgroundImage)).toContain('faviconextractor');
+    expect(await raw(page, id)).not.toContain('A preview with an icon');
+    await cancel(page);
+});
+
+test('extension and ACL managers keep usable columns, details and controls on phones', async ({ page }, testInfo) => {
+    await login(page, 'admin');
+    const plugins = path.resolve('.dev/wiki/conf/plugins.local.php');
+    const original = await fs.readFile(plugins);
+    try {
+        await page.goto(`${url('start', 'admin')}&page=extension`);
+        const popularity = page.locator('section.extension').filter({ has: page.locator('.screenshot .id').filter({ hasText: /^popularity$/ }) });
+        await popularity.getByRole('button', { name: 'Disable', exact: true }).click();
+        await expect(popularity).toHaveClass(/disabled/);
+        await expect(popularity.locator('.main')).toHaveCSS('opacity', '1');
+        await popularity.getByRole('button', { name: 'Enable', exact: true }).click();
+        await expect(popularity).not.toHaveClass(/disabled/);
+    } finally {
+        await atomicWrite(plugins, original);
+    }
+    for (const width of [360, 1280]) {
+        await page.setViewportSize({ width, height: 960 });
+        for (const appearance of ['light', 'dark']) {
+            await setAppearance(page, appearance);
+            await page.goto(`${url('start', 'admin')}&page=extension`);
+            const extension = page.locator('#extension__list section.extension').first();
+            const main = await extension.locator('.main').boundingBox();
+            expect(main.width).toBeGreaterThan(width === 360 ? 200 : 400);
+            const details = extension.locator('.details details');
+            await details.locator('summary').click();
+            await expect(details).toHaveAttribute('open', '');
+            await details.locator('summary').click();
+            await expect(details).not.toHaveAttribute('open');
+            await noOverflow(page);
+            if (testInfo.project.name === 'chromium') await page.screenshot({ path: `docs/screenshots/chromium-extension-${width}-${appearance}.png` });
+            await page.goto(`${url('start', 'admin')}&page=acl`);
+            await expect(page.locator('#acl_manager')).toBeVisible();
+            const radio = page.locator('#acl_manager input[type=radio]').first();
+            await radio.check();
+            await expect(radio).toBeChecked();
+            if (width === 360) {
+                const tree = await page.locator('#acl__tree').boundingBox();
+                const panel = await page.locator('#acl__detail').boundingBox();
+                expect(panel.y).toBeGreaterThanOrEqual(tree.y + tree.height);
+                expect(tree.width).toBeGreaterThan(300);
+            }
+            await noOverflow(page);
+            if (testInfo.project.name === 'chromium') await page.screenshot({ path: `docs/screenshots/chromium-acl-${width}-${appearance}.png` });
+        }
+    }
+    const notes = page.locator('#acl__tree .idx_dir').filter({ hasText: /^notes$/ }).locator('xpath=../..');
+    await notes.locator('img').first().click();
+    await expect(notes).toHaveClass(/open/);
+    await expect(notes.locator('ul')).toBeVisible();
+});
+
+test('cmsmode settings and Hiding IPs retain their native permission hooks', async ({ page }) => {
+    await page.goto(url('privacy', 'revisions'));
+    await expect(page.locator('.page')).not.toContainText('203.0.113.17');
+    await expect(page.locator('.page')).not.toContainText('2001:db8::17');
+    for (const action of ['recent', 'diff']) {
+        await page.goto(url('privacy', action));
+        await expect(page.locator('.page')).not.toContainText('2001:db8::17');
+        await expect(page.locator('.page')).not.toContainText('203.0.113.17');
+    }
+    await login(page, 'admin');
+    await page.goto(url('privacy', 'revisions'));
+    await expect(page.locator('.page')).toContainText('203.0.113.17');
+    await expect(page.locator('.page')).toContainText('2001:db8::17');
+    const target = path.resolve('.dev/wiki/conf/local.php');
+    const original = await fs.readFile(target, 'utf8');
+    const context = await page.context().browser().newContext({ baseURL: base });
+    await localFavicons(context);
+    const reader = await context.newPage();
+    try {
+        await atomicWrite(target, original + "\n$conf['plugin']['cmsmode']['actions'] = 'backlink,index,recent,revisions,media,search,source,export_raw,rss';\n$conf['plugin']['cmsmode']['youarehere'] = 1;\n");
+        await reader.goto(url('start'));
+        await expect(reader.locator('#qsearch__in, .breadcrumbs, #dokuwiki__pagetools > a')).toHaveCount(0);
+        await expect(reader.locator('.page h1')).toHaveText('Notebook');
+        await page.goto(url('start'));
+        await expect(page.locator('#qsearch__in')).toBeVisible();
+        await expect(page.locator('#dokuwiki__pagetools > a')).toHaveText('Edit this page');
+    } finally {
+        await atomicWrite(target, original);
+        await context.close();
+    }
+});
+
+test('confmanager keeps native selection, save, icon dialog and deletion usable', async ({ page }, testInfo) => {
+    await login(page, 'admin');
+    const conf = path.resolve('.dev/wiki/conf');
+    const names = ['interwiki.local.conf'];
+    const original = new Map(await Promise.all(names.map(async name => [name, await fs.readFile(path.join(conf, name)).catch(() => null)])));
+    try {
+        await page.goto(`${url('start', 'admin')}&page=confmanager`);
+        await page.getByRole('combobox', { name: 'Select a configuration file' }).click();
+        await page.getByRole('option', { name: 'InterWiki Links', exact: true }).click();
+        await expect(page.locator('#configForm')).toBeVisible();
+        const key = `cesacompat${testInfo.project.name}`;
+        await page.locator('.newItem.key').fill(key);
+        await page.locator('.newItem.value').fill('https://example.invalid/{NAME}');
+        await page.locator('#configForm .saveButton').first().click();
+        const entry = page.locator(`#configForm input.key[value="${key}"]`);
+        await expect(entry).toBeVisible();
+        expect(await fs.readFile(path.join(conf, 'interwiki.local.conf'), 'utf8')).toContain(key);
+        for (const width of [390, 1280]) {
+            await page.setViewportSize({ width, height: 960 });
+            for (const appearance of ['light', 'dark']) {
+                await setAppearance(page, appearance);
+                const background = appearance === 'dark' ? 'rgb(32, 33, 31)' : await page.locator('html').evaluate(e => getComputedStyle(e).backgroundColor);
+                await expect(page.locator('#confmanager > .level1')).toHaveCSS('background-color', background);
+                await entry.locator('xpath=../..').locator('.upload_image_button').click();
+                await expect(page.locator('#confmanager .popup')).toBeVisible();
+                await expect(page.locator('#confmanager .popupcontent:visible')).toHaveCSS('background-color', background);
+                const box = await page.locator('#confmanager .popup').boundingBox();
+                expect(box.x).toBeGreaterThanOrEqual(0);
+                expect(box.x + box.width).toBeLessThanOrEqual(width);
+                if (testInfo.project.name === 'chromium') await page.screenshot({ path: `docs/screenshots/chromium-confmanager-${width}-${appearance}.png` });
+                await page.locator('#popup_cancel').click();
+                await expect(page.locator('#confmanager .popup')).toBeHidden();
+                await noOverflow(page);
+            }
+        }
+        await entry.locator('xpath=../..').locator('.deleteButton').click();
+        await expect(entry).toHaveCount(0);
+        const remaining = await fs.readFile(path.join(conf, 'interwiki.local.conf'), 'utf8').catch(error => {
+            if (error.code === 'ENOENT') return '';
+            throw error;
+        });
+        expect(remaining).not.toContain(key);
+    } finally {
+        for (const [name, data] of original) {
+            const target = path.join(conf, name);
+            if (data === null) await fs.rm(target, { force: true });
+            else await atomicWrite(target, data);
+        }
     }
 });
 

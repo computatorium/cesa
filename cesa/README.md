@@ -47,6 +47,10 @@ Editing uses DokuWiki's source editor, toolbar, preview, drafts, and locks. The 
 
 Wrap and the legacy MathJax 2 plugin have optional compatibility styles. Install them separately; neither is bundled or required. The tested MathJax plugin needs the MathJax 2 runtime; MathJax 3 and 4 do not work with it.
 
+Linkfavicon, Confmanager, and the bundled administration screens have compatibility styles for both palettes and small screens. CMS mode's disabled actions and Hiding IPs' output hooks remain under plugin control. Authentication plugins use DokuWiki's normal forms and settings.
+
+Older Confmanager and Hiding IPs releases need the [optional compatibility patches](compat/README.md) for PHP 8.2 and Mort. Installing the template does not apply them.
+
 ## Upgrade or roll back
 
 Back up `lib/tpl/cesa/`, replace it with the new archive, then save Configuration Manager settings or run `touch conf/local.php` and reload the browser to recompile cached assets.
