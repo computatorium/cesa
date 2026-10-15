@@ -1,6 +1,6 @@
 {
   "version": "1.0.1",
-  "recorded_utc": "2026-10-15T02:23:51.937671+00:00",
+  "recorded_utc": "2026-10-15T02:40:32.205400+00:00",
   "platform": "macOS-26.6.2-arm64-arm-64bit-Mach-O",
   "php": "8.2.34",
   "browsers": {
@@ -28,19 +28,19 @@
   "playwright": "1.64.1",
   "optional_mathjax_runtime": "2.7.9 (development only)",
   "installation": "Extracted release archive, verified against source and per-test provenance",
-  "archive_sha256": "74b7d06a9e96ec20e21257547e2ce79f70b047dd5329fa0061347d7742e9b742",
-  "template_tree_sha256": "09892920e5a6cda8ebea74c9daaa834599dc5408ec1e878b87ecd216b17927ec",
-  "archive_bytes": 36314,
+  "archive_sha256": "8443938403a5da8d638401e5e06b13b99e218e4f9e988afaa4c864df1b97754e",
+  "template_tree_sha256": "8a32a2c19e4d594a984a7ff8bae7b377b96353068d8de77c992b416f9fea9c8f",
+  "archive_bytes": 36317,
   "assets": {
     "css_gzip_bytes": 9158,
-    "js_gzip_bytes": 5088,
-    "js_source_gzip_bytes": 5736,
+    "js_gzip_bytes": 5095,
+    "js_source_gzip_bytes": 5737,
     "css_bytes": 40077,
-    "js_source_bytes": 22418
+    "js_source_bytes": 22427
   },
   "stats": {
-    "startTime": "2026-10-15T02:19:55.669Z",
-    "duration": 233516.04,
+    "startTime": "2026-10-15T02:36:43.811Z",
+    "duration": 225664.404,
     "expected": 114,
     "skipped": 0,
     "unexpected": 0,
@@ -51,798 +51,798 @@
       "browser": "chromium",
       "test": "one stable reading column for articles, login, sitemap, media, history and editing",
       "status": "passed",
-      "duration_ms": 3670,
+      "duration_ms": 3755,
       "known_upstream_unload_diagnostics": 0
     },
     {
       "browser": "chromium",
       "test": "custom selects preserve keyboard, pointer, multiple values, core changes and reset",
       "status": "passed",
-      "duration_ms": 802,
+      "duration_ms": 756,
       "known_upstream_unload_diagnostics": 0
     },
     {
       "browser": "chromium",
       "test": "reading, keyboard navigation, contents, hooks and native actions",
       "status": "passed",
-      "duration_ms": 606,
+      "duration_ms": 596,
       "known_upstream_unload_diagnostics": 0
     },
     {
       "browser": "chromium",
       "test": "sticky navigation, centered compact summary and consistent sitemap expansion",
-      "status": "passed",
-      "duration_ms": 917,
-      "known_upstream_unload_diagnostics": 0
-    },
-    {
-      "browser": "chromium",
-      "test": "footnotes and return anchors clear the sticky compact navigation",
-      "status": "passed",
-      "duration_ms": 388,
-      "known_upstream_unload_diagnostics": 0
-    },
-    {
-      "browser": "chromium",
-      "test": "enlarged text, touch controls, open menus and whole-shell RTL reflow",
-      "status": "passed",
-      "duration_ms": 1539,
-      "known_upstream_unload_diagnostics": 0
-    },
-    {
-      "browser": "chromium",
-      "test": "System, Light and Dark persist and follow live system changes",
-      "status": "passed",
-      "duration_ms": 648,
-      "known_upstream_unload_diagnostics": 0
-    },
-    {
-      "browser": "chromium",
-      "test": "shared shell aligns header, rail and content with consistent relative controls",
-      "status": "passed",
-      "duration_ms": 1048,
-      "known_upstream_unload_diagnostics": 0
-    },
-    {
-      "browser": "chromium",
-      "test": "wide tables and source blocks scroll using the keyboard",
-      "status": "passed",
-      "duration_ms": 226,
-      "known_upstream_unload_diagnostics": 0
-    },
-    {
-      "browser": "chromium",
-      "test": "stored appearance is applied before the stylesheet can paint",
-      "status": "passed",
-      "duration_ms": 263,
-      "known_upstream_unload_diagnostics": 0
-    },
-    {
-      "browser": "chromium",
-      "test": "blocked browser storage still allows appearance and navigation",
-      "status": "passed",
-      "duration_ms": 444,
-      "known_upstream_unload_diagnostics": 0
-    },
-    {
-      "browser": "chromium",
-      "test": "no JavaScript: reading, disclosure navigation, login and server preview/save",
-      "status": "passed",
-      "duration_ms": 1479,
-      "known_upstream_unload_diagnostics": 0
-    },
-    {
-      "browser": "chromium",
-      "test": "reading layouts 360px light",
-      "status": "passed",
-      "duration_ms": 1369,
-      "known_upstream_unload_diagnostics": 0
-    },
-    {
-      "browser": "chromium",
-      "test": "reading layouts 360px dark",
-      "status": "passed",
-      "duration_ms": 1378,
-      "known_upstream_unload_diagnostics": 0
-    },
-    {
-      "browser": "chromium",
-      "test": "reading layouts 390px light",
-      "status": "passed",
-      "duration_ms": 1545,
-      "known_upstream_unload_diagnostics": 0
-    },
-    {
-      "browser": "chromium",
-      "test": "reading layouts 390px dark",
-      "status": "passed",
-      "duration_ms": 1572,
-      "known_upstream_unload_diagnostics": 0
-    },
-    {
-      "browser": "chromium",
-      "test": "reading layouts 768px light",
-      "status": "passed",
-      "duration_ms": 1356,
-      "known_upstream_unload_diagnostics": 0
-    },
-    {
-      "browser": "chromium",
-      "test": "reading layouts 768px dark",
-      "status": "passed",
-      "duration_ms": 1377,
-      "known_upstream_unload_diagnostics": 0
-    },
-    {
-      "browser": "chromium",
-      "test": "reading layouts 1280px light",
-      "status": "passed",
-      "duration_ms": 1589,
-      "known_upstream_unload_diagnostics": 0
-    },
-    {
-      "browser": "chromium",
-      "test": "reading layouts 1280px dark",
-      "status": "passed",
-      "duration_ms": 1557,
-      "known_upstream_unload_diagnostics": 0
-    },
-    {
-      "browser": "chromium",
-      "test": "reading layouts 1920px light",
-      "status": "passed",
-      "duration_ms": 1061,
-      "known_upstream_unload_diagnostics": 0
-    },
-    {
-      "browser": "chromium",
-      "test": "reading layouts 1920px dark",
-      "status": "passed",
-      "duration_ms": 1060,
-      "known_upstream_unload_diagnostics": 0
-    },
-    {
-      "browser": "chromium",
-      "test": "anonymous and reader ACLs, discovery and native source view",
-      "status": "passed",
-      "duration_ms": 2027,
-      "known_upstream_unload_diagnostics": 0
-    },
-    {
-      "browser": "chromium",
-      "test": "search, index, recent changes, backlinks, revisions and diff",
-      "status": "passed",
-      "duration_ms": 1026,
-      "known_upstream_unload_diagnostics": 0
-    },
-    {
-      "browser": "chromium",
-      "test": "Recent Changes and diff dropdowns remain usable after core initialization",
-      "status": "passed",
-      "duration_ms": 726,
-      "known_upstream_unload_diagnostics": 0
-    },
-    {
-      "browser": "chromium",
-      "test": "create, repeated accurate preview without saving, summary, save, cancel and toolbar",
-      "status": "passed",
-      "duration_ms": 5786,
-      "known_upstream_unload_diagnostics": 0
-    },
-    {
-      "browser": "chromium",
-      "test": "section editing preserves surrounding sections",
-      "status": "passed",
-      "duration_ms": 2872,
-      "known_upstream_unload_diagnostics": 0
-    },
-    {
-      "browser": "chromium",
-      "test": "restoring an old revision requires confirmation and preserves Cancel",
-      "status": "passed",
-      "duration_ms": 3750,
-      "known_upstream_unload_diagnostics": 0
-    },
-    {
-      "browser": "chromium",
-      "test": "native draft refresh, recovery, unsaved warning and locks",
-      "status": "passed",
-      "duration_ms": 6240,
-      "known_upstream_unload_diagnostics": 0
-    },
-    {
-      "browser": "chromium",
-      "test": "conflicting edits retain both versions until the user decides",
-      "status": "passed",
-      "duration_ms": 4205,
-      "known_upstream_unload_diagnostics": 0
-    },
-    {
-      "browser": "chromium",
-      "test": "optional plugins render in article and repeated server previews",
-      "status": "passed",
-      "duration_ms": 2884,
-      "known_upstream_unload_diagnostics": 0
-    },
-    {
-      "browser": "chromium",
-      "test": "media popup upload and insertion, fullscreen manager and image detail",
-      "status": "passed",
-      "duration_ms": 3595,
-      "known_upstream_unload_diagnostics": 0
-    },
-    {
-      "browser": "chromium",
-      "test": "media previews fit automatically sized panels and enlarged text reflows",
-      "status": "passed",
-      "duration_ms": 1066,
-      "known_upstream_unload_diagnostics": 0
-    },
-    {
-      "browser": "chromium",
-      "test": "highlighted code and native feedback keep readable palette contrast",
-      "status": "passed",
-      "duration_ms": 450,
-      "known_upstream_unload_diagnostics": 0
-    },
-    {
-      "browser": "chromium",
-      "test": "profile, subscriptions and bundled administration screens",
-      "status": "passed",
-      "duration_ms": 4536,
-      "known_upstream_unload_diagnostics": 0
-    },
-    {
-      "browser": "chromium",
-      "test": "profile update, account logout and password-reset form",
-      "status": "passed",
-      "duration_ms": 2220,
-      "known_upstream_unload_diagnostics": 0
-    },
-    {
-      "browser": "chromium",
-      "test": "200% text zoom, RTL directions and print",
-      "status": "passed",
-      "duration_ms": 526,
-      "known_upstream_unload_diagnostics": 0
-    },
-    {
-      "browser": "chromium",
-      "test": "template configuration, disabled actions, include hooks and local style overrides",
-      "status": "passed",
-      "duration_ms": 1406,
-      "known_upstream_unload_diagnostics": 0
-    },
-    {
-      "browser": "firefox",
-      "test": "one stable reading column for articles, login, sitemap, media, history and editing",
-      "status": "passed",
-      "duration_ms": 5663,
-      "known_upstream_unload_diagnostics": 0
-    },
-    {
-      "browser": "firefox",
-      "test": "custom selects preserve keyboard, pointer, multiple values, core changes and reset",
-      "status": "passed",
-      "duration_ms": 1245,
-      "known_upstream_unload_diagnostics": 0
-    },
-    {
-      "browser": "firefox",
-      "test": "reading, keyboard navigation, contents, hooks and native actions",
-      "status": "passed",
-      "duration_ms": 802,
-      "known_upstream_unload_diagnostics": 0
-    },
-    {
-      "browser": "firefox",
-      "test": "sticky navigation, centered compact summary and consistent sitemap expansion",
-      "status": "passed",
-      "duration_ms": 1317,
-      "known_upstream_unload_diagnostics": 0
-    },
-    {
-      "browser": "firefox",
-      "test": "footnotes and return anchors clear the sticky compact navigation",
-      "status": "passed",
-      "duration_ms": 587,
-      "known_upstream_unload_diagnostics": 0
-    },
-    {
-      "browser": "firefox",
-      "test": "enlarged text, touch controls, open menus and whole-shell RTL reflow",
-      "status": "passed",
-      "duration_ms": 2528,
-      "known_upstream_unload_diagnostics": 0
-    },
-    {
-      "browser": "firefox",
-      "test": "System, Light and Dark persist and follow live system changes",
       "status": "passed",
       "duration_ms": 929,
       "known_upstream_unload_diagnostics": 0
     },
     {
+      "browser": "chromium",
+      "test": "footnotes and return anchors clear the sticky compact navigation",
+      "status": "passed",
+      "duration_ms": 404,
+      "known_upstream_unload_diagnostics": 0
+    },
+    {
+      "browser": "chromium",
+      "test": "enlarged text, touch controls, open menus and whole-shell RTL reflow",
+      "status": "passed",
+      "duration_ms": 1585,
+      "known_upstream_unload_diagnostics": 0
+    },
+    {
+      "browser": "chromium",
+      "test": "System, Light and Dark persist and follow live system changes",
+      "status": "passed",
+      "duration_ms": 613,
+      "known_upstream_unload_diagnostics": 0
+    },
+    {
+      "browser": "chromium",
+      "test": "shared shell aligns header, rail and content with consistent relative controls",
+      "status": "passed",
+      "duration_ms": 949,
+      "known_upstream_unload_diagnostics": 0
+    },
+    {
+      "browser": "chromium",
+      "test": "wide tables and source blocks scroll using the keyboard",
+      "status": "passed",
+      "duration_ms": 245,
+      "known_upstream_unload_diagnostics": 0
+    },
+    {
+      "browser": "chromium",
+      "test": "stored appearance is applied before the stylesheet can paint",
+      "status": "passed",
+      "duration_ms": 184,
+      "known_upstream_unload_diagnostics": 0
+    },
+    {
+      "browser": "chromium",
+      "test": "blocked browser storage still allows appearance and navigation",
+      "status": "passed",
+      "duration_ms": 455,
+      "known_upstream_unload_diagnostics": 0
+    },
+    {
+      "browser": "chromium",
+      "test": "no JavaScript: reading, disclosure navigation, login and server preview/save",
+      "status": "passed",
+      "duration_ms": 1379,
+      "known_upstream_unload_diagnostics": 0
+    },
+    {
+      "browser": "chromium",
+      "test": "reading layouts 360px light",
+      "status": "passed",
+      "duration_ms": 1382,
+      "known_upstream_unload_diagnostics": 0
+    },
+    {
+      "browser": "chromium",
+      "test": "reading layouts 360px dark",
+      "status": "passed",
+      "duration_ms": 1363,
+      "known_upstream_unload_diagnostics": 0
+    },
+    {
+      "browser": "chromium",
+      "test": "reading layouts 390px light",
+      "status": "passed",
+      "duration_ms": 1509,
+      "known_upstream_unload_diagnostics": 0
+    },
+    {
+      "browser": "chromium",
+      "test": "reading layouts 390px dark",
+      "status": "passed",
+      "duration_ms": 1573,
+      "known_upstream_unload_diagnostics": 0
+    },
+    {
+      "browser": "chromium",
+      "test": "reading layouts 768px light",
+      "status": "passed",
+      "duration_ms": 1416,
+      "known_upstream_unload_diagnostics": 0
+    },
+    {
+      "browser": "chromium",
+      "test": "reading layouts 768px dark",
+      "status": "passed",
+      "duration_ms": 1396,
+      "known_upstream_unload_diagnostics": 0
+    },
+    {
+      "browser": "chromium",
+      "test": "reading layouts 1280px light",
+      "status": "passed",
+      "duration_ms": 1565,
+      "known_upstream_unload_diagnostics": 0
+    },
+    {
+      "browser": "chromium",
+      "test": "reading layouts 1280px dark",
+      "status": "passed",
+      "duration_ms": 1579,
+      "known_upstream_unload_diagnostics": 0
+    },
+    {
+      "browser": "chromium",
+      "test": "reading layouts 1920px light",
+      "status": "passed",
+      "duration_ms": 1090,
+      "known_upstream_unload_diagnostics": 0
+    },
+    {
+      "browser": "chromium",
+      "test": "reading layouts 1920px dark",
+      "status": "passed",
+      "duration_ms": 1046,
+      "known_upstream_unload_diagnostics": 0
+    },
+    {
+      "browser": "chromium",
+      "test": "anonymous and reader ACLs, discovery and native source view",
+      "status": "passed",
+      "duration_ms": 1993,
+      "known_upstream_unload_diagnostics": 0
+    },
+    {
+      "browser": "chromium",
+      "test": "search, index, recent changes, backlinks, revisions and diff",
+      "status": "passed",
+      "duration_ms": 824,
+      "known_upstream_unload_diagnostics": 0
+    },
+    {
+      "browser": "chromium",
+      "test": "Recent Changes and diff dropdowns remain usable after core initialization",
+      "status": "passed",
+      "duration_ms": 719,
+      "known_upstream_unload_diagnostics": 0
+    },
+    {
+      "browser": "chromium",
+      "test": "create, repeated accurate preview without saving, summary, save, cancel and toolbar",
+      "status": "passed",
+      "duration_ms": 5775,
+      "known_upstream_unload_diagnostics": 0
+    },
+    {
+      "browser": "chromium",
+      "test": "section editing preserves surrounding sections",
+      "status": "passed",
+      "duration_ms": 2913,
+      "known_upstream_unload_diagnostics": 0
+    },
+    {
+      "browser": "chromium",
+      "test": "restoring an old revision requires confirmation and preserves Cancel",
+      "status": "passed",
+      "duration_ms": 3312,
+      "known_upstream_unload_diagnostics": 0
+    },
+    {
+      "browser": "chromium",
+      "test": "native draft refresh, recovery, unsaved warning and locks",
+      "status": "passed",
+      "duration_ms": 6804,
+      "known_upstream_unload_diagnostics": 0
+    },
+    {
+      "browser": "chromium",
+      "test": "conflicting edits retain both versions until the user decides",
+      "status": "passed",
+      "duration_ms": 3932,
+      "known_upstream_unload_diagnostics": 0
+    },
+    {
+      "browser": "chromium",
+      "test": "optional plugins render in article and repeated server previews",
+      "status": "passed",
+      "duration_ms": 2813,
+      "known_upstream_unload_diagnostics": 0
+    },
+    {
+      "browser": "chromium",
+      "test": "media popup upload and insertion, fullscreen manager and image detail",
+      "status": "passed",
+      "duration_ms": 3422,
+      "known_upstream_unload_diagnostics": 0
+    },
+    {
+      "browser": "chromium",
+      "test": "media previews fit automatically sized panels and enlarged text reflows",
+      "status": "passed",
+      "duration_ms": 1088,
+      "known_upstream_unload_diagnostics": 0
+    },
+    {
+      "browser": "chromium",
+      "test": "highlighted code and native feedback keep readable palette contrast",
+      "status": "passed",
+      "duration_ms": 387,
+      "known_upstream_unload_diagnostics": 0
+    },
+    {
+      "browser": "chromium",
+      "test": "profile, subscriptions and bundled administration screens",
+      "status": "passed",
+      "duration_ms": 3783,
+      "known_upstream_unload_diagnostics": 0
+    },
+    {
+      "browser": "chromium",
+      "test": "profile update, account logout and password-reset form",
+      "status": "passed",
+      "duration_ms": 2104,
+      "known_upstream_unload_diagnostics": 0
+    },
+    {
+      "browser": "chromium",
+      "test": "200% text zoom, RTL directions and print",
+      "status": "passed",
+      "duration_ms": 478,
+      "known_upstream_unload_diagnostics": 0
+    },
+    {
+      "browser": "chromium",
+      "test": "template configuration, disabled actions, include hooks and local style overrides",
+      "status": "passed",
+      "duration_ms": 1443,
+      "known_upstream_unload_diagnostics": 0
+    },
+    {
+      "browser": "firefox",
+      "test": "one stable reading column for articles, login, sitemap, media, history and editing",
+      "status": "passed",
+      "duration_ms": 4925,
+      "known_upstream_unload_diagnostics": 0
+    },
+    {
+      "browser": "firefox",
+      "test": "custom selects preserve keyboard, pointer, multiple values, core changes and reset",
+      "status": "passed",
+      "duration_ms": 1129,
+      "known_upstream_unload_diagnostics": 0
+    },
+    {
+      "browser": "firefox",
+      "test": "reading, keyboard navigation, contents, hooks and native actions",
+      "status": "passed",
+      "duration_ms": 850,
+      "known_upstream_unload_diagnostics": 0
+    },
+    {
+      "browser": "firefox",
+      "test": "sticky navigation, centered compact summary and consistent sitemap expansion",
+      "status": "passed",
+      "duration_ms": 1273,
+      "known_upstream_unload_diagnostics": 0
+    },
+    {
+      "browser": "firefox",
+      "test": "footnotes and return anchors clear the sticky compact navigation",
+      "status": "passed",
+      "duration_ms": 982,
+      "known_upstream_unload_diagnostics": 0
+    },
+    {
+      "browser": "firefox",
+      "test": "enlarged text, touch controls, open menus and whole-shell RTL reflow",
+      "status": "passed",
+      "duration_ms": 2380,
+      "known_upstream_unload_diagnostics": 0
+    },
+    {
+      "browser": "firefox",
+      "test": "System, Light and Dark persist and follow live system changes",
+      "status": "passed",
+      "duration_ms": 897,
+      "known_upstream_unload_diagnostics": 0
+    },
+    {
       "browser": "firefox",
       "test": "shared shell aligns header, rail and content with consistent relative controls",
       "status": "passed",
-      "duration_ms": 1382,
+      "duration_ms": 1323,
       "known_upstream_unload_diagnostics": 0
     },
     {
       "browser": "firefox",
       "test": "wide tables and source blocks scroll using the keyboard",
       "status": "passed",
-      "duration_ms": 765,
+      "duration_ms": 715,
       "known_upstream_unload_diagnostics": 0
     },
     {
       "browser": "firefox",
       "test": "stored appearance is applied before the stylesheet can paint",
       "status": "passed",
-      "duration_ms": 313,
+      "duration_ms": 298,
       "known_upstream_unload_diagnostics": 0
     },
     {
       "browser": "firefox",
       "test": "blocked browser storage still allows appearance and navigation",
       "status": "passed",
-      "duration_ms": 625,
+      "duration_ms": 651,
       "known_upstream_unload_diagnostics": 0
     },
     {
       "browser": "firefox",
       "test": "no JavaScript: reading, disclosure navigation, login and server preview/save",
       "status": "passed",
-      "duration_ms": 1814,
+      "duration_ms": 1775,
       "known_upstream_unload_diagnostics": 0
     },
     {
       "browser": "firefox",
       "test": "reading layouts 360px light",
       "status": "passed",
-      "duration_ms": 1763,
+      "duration_ms": 1698,
       "known_upstream_unload_diagnostics": 0
     },
     {
       "browser": "firefox",
       "test": "reading layouts 360px dark",
       "status": "passed",
-      "duration_ms": 1689,
+      "duration_ms": 1727,
       "known_upstream_unload_diagnostics": 0
     },
     {
       "browser": "firefox",
       "test": "reading layouts 390px light",
       "status": "passed",
-      "duration_ms": 1709,
+      "duration_ms": 1718,
       "known_upstream_unload_diagnostics": 0
     },
     {
       "browser": "firefox",
       "test": "reading layouts 390px dark",
       "status": "passed",
-      "duration_ms": 1732,
+      "duration_ms": 1670,
       "known_upstream_unload_diagnostics": 0
     },
     {
       "browser": "firefox",
       "test": "reading layouts 768px light",
       "status": "passed",
-      "duration_ms": 1667,
+      "duration_ms": 1651,
       "known_upstream_unload_diagnostics": 0
     },
     {
       "browser": "firefox",
       "test": "reading layouts 768px dark",
       "status": "passed",
-      "duration_ms": 2005,
+      "duration_ms": 2151,
       "known_upstream_unload_diagnostics": 0
     },
     {
       "browser": "firefox",
       "test": "reading layouts 1280px light",
       "status": "passed",
-      "duration_ms": 1742,
+      "duration_ms": 1724,
       "known_upstream_unload_diagnostics": 0
     },
     {
       "browser": "firefox",
       "test": "reading layouts 1280px dark",
       "status": "passed",
-      "duration_ms": 1739,
+      "duration_ms": 1699,
       "known_upstream_unload_diagnostics": 0
     },
     {
       "browser": "firefox",
       "test": "reading layouts 1920px light",
       "status": "passed",
-      "duration_ms": 1220,
+      "duration_ms": 1153,
       "known_upstream_unload_diagnostics": 0
     },
     {
       "browser": "firefox",
       "test": "reading layouts 1920px dark",
       "status": "passed",
-      "duration_ms": 1182,
+      "duration_ms": 1161,
       "known_upstream_unload_diagnostics": 0
     },
     {
       "browser": "firefox",
       "test": "anonymous and reader ACLs, discovery and native source view",
       "status": "passed",
-      "duration_ms": 2271,
+      "duration_ms": 2161,
       "known_upstream_unload_diagnostics": 0
     },
     {
       "browser": "firefox",
       "test": "search, index, recent changes, backlinks, revisions and diff",
       "status": "passed",
-      "duration_ms": 1035,
+      "duration_ms": 947,
       "known_upstream_unload_diagnostics": 0
     },
     {
       "browser": "firefox",
       "test": "Recent Changes and diff dropdowns remain usable after core initialization",
       "status": "passed",
-      "duration_ms": 1053,
+      "duration_ms": 1006,
       "known_upstream_unload_diagnostics": 0
     },
     {
       "browser": "firefox",
       "test": "create, repeated accurate preview without saving, summary, save, cancel and toolbar",
       "status": "passed",
-      "duration_ms": 6784,
+      "duration_ms": 6734,
       "known_upstream_unload_diagnostics": 0
     },
     {
       "browser": "firefox",
       "test": "section editing preserves surrounding sections",
       "status": "passed",
-      "duration_ms": 3180,
+      "duration_ms": 3367,
       "known_upstream_unload_diagnostics": 0
     },
     {
       "browser": "firefox",
       "test": "restoring an old revision requires confirmation and preserves Cancel",
       "status": "passed",
-      "duration_ms": 4280,
+      "duration_ms": 4291,
       "known_upstream_unload_diagnostics": 0
     },
     {
       "browser": "firefox",
       "test": "native draft refresh, recovery, unsaved warning and locks",
       "status": "passed",
-      "duration_ms": 7173,
+      "duration_ms": 6385,
       "known_upstream_unload_diagnostics": 0
     },
     {
       "browser": "firefox",
       "test": "conflicting edits retain both versions until the user decides",
       "status": "passed",
-      "duration_ms": 5020,
+      "duration_ms": 4600,
       "known_upstream_unload_diagnostics": 0
     },
     {
       "browser": "firefox",
       "test": "optional plugins render in article and repeated server previews",
       "status": "passed",
-      "duration_ms": 3810,
+      "duration_ms": 3474,
       "known_upstream_unload_diagnostics": 0
     },
     {
       "browser": "firefox",
       "test": "media popup upload and insertion, fullscreen manager and image detail",
       "status": "passed",
-      "duration_ms": 4681,
+      "duration_ms": 4358,
       "known_upstream_unload_diagnostics": 0
     },
     {
       "browser": "firefox",
       "test": "media previews fit automatically sized panels and enlarged text reflows",
       "status": "passed",
-      "duration_ms": 1723,
+      "duration_ms": 1422,
       "known_upstream_unload_diagnostics": 0
     },
     {
       "browser": "firefox",
       "test": "highlighted code and native feedback keep readable palette contrast",
       "status": "passed",
-      "duration_ms": 551,
+      "duration_ms": 531,
       "known_upstream_unload_diagnostics": 0
     },
     {
       "browser": "firefox",
       "test": "profile, subscriptions and bundled administration screens",
       "status": "passed",
-      "duration_ms": 4276,
+      "duration_ms": 3547,
       "known_upstream_unload_diagnostics": 0
     },
     {
       "browser": "firefox",
       "test": "profile update, account logout and password-reset form",
       "status": "passed",
-      "duration_ms": 2960,
+      "duration_ms": 2745,
       "known_upstream_unload_diagnostics": 0
     },
     {
       "browser": "firefox",
       "test": "200% text zoom, RTL directions and print",
       "status": "passed",
-      "duration_ms": 783,
+      "duration_ms": 599,
       "known_upstream_unload_diagnostics": 0
     },
     {
       "browser": "firefox",
       "test": "template configuration, disabled actions, include hooks and local style overrides",
       "status": "passed",
-      "duration_ms": 1467,
+      "duration_ms": 1315,
       "known_upstream_unload_diagnostics": 0
     },
     {
       "browser": "webkit",
       "test": "one stable reading column for articles, login, sitemap, media, history and editing",
       "status": "passed",
-      "duration_ms": 4777,
+      "duration_ms": 4529,
       "known_upstream_unload_diagnostics": 0
     },
     {
       "browser": "webkit",
       "test": "custom selects preserve keyboard, pointer, multiple values, core changes and reset",
       "status": "passed",
-      "duration_ms": 1051,
+      "duration_ms": 1072,
       "known_upstream_unload_diagnostics": 0
     },
     {
       "browser": "webkit",
       "test": "reading, keyboard navigation, contents, hooks and native actions",
       "status": "passed",
-      "duration_ms": 781,
+      "duration_ms": 833,
       "known_upstream_unload_diagnostics": 0
     },
     {
       "browser": "webkit",
       "test": "sticky navigation, centered compact summary and consistent sitemap expansion",
       "status": "passed",
-      "duration_ms": 1103,
+      "duration_ms": 1124,
       "known_upstream_unload_diagnostics": 0
     },
     {
       "browser": "webkit",
       "test": "footnotes and return anchors clear the sticky compact navigation",
       "status": "passed",
-      "duration_ms": 505,
+      "duration_ms": 498,
       "known_upstream_unload_diagnostics": 0
     },
     {
       "browser": "webkit",
       "test": "enlarged text, touch controls, open menus and whole-shell RTL reflow",
       "status": "passed",
-      "duration_ms": 2074,
+      "duration_ms": 2093,
       "known_upstream_unload_diagnostics": 0
     },
     {
       "browser": "webkit",
       "test": "System, Light and Dark persist and follow live system changes",
       "status": "passed",
-      "duration_ms": 915,
+      "duration_ms": 862,
       "known_upstream_unload_diagnostics": 0
     },
     {
       "browser": "webkit",
       "test": "shared shell aligns header, rail and content with consistent relative controls",
       "status": "passed",
-      "duration_ms": 1233,
+      "duration_ms": 1197,
       "known_upstream_unload_diagnostics": 0
     },
     {
       "browser": "webkit",
       "test": "wide tables and source blocks scroll using the keyboard",
       "status": "passed",
-      "duration_ms": 382,
+      "duration_ms": 346,
       "known_upstream_unload_diagnostics": 0
     },
     {
       "browser": "webkit",
       "test": "stored appearance is applied before the stylesheet can paint",
       "status": "passed",
-      "duration_ms": 310,
+      "duration_ms": 303,
       "known_upstream_unload_diagnostics": 0
     },
     {
       "browser": "webkit",
       "test": "blocked browser storage still allows appearance and navigation",
       "status": "passed",
-      "duration_ms": 603,
+      "duration_ms": 560,
       "known_upstream_unload_diagnostics": 0
     },
     {
       "browser": "webkit",
       "test": "no JavaScript: reading, disclosure navigation, login and server preview/save",
       "status": "passed",
-      "duration_ms": 1830,
+      "duration_ms": 1838,
       "known_upstream_unload_diagnostics": 0
     },
     {
       "browser": "webkit",
       "test": "reading layouts 360px light",
       "status": "passed",
-      "duration_ms": 1537,
+      "duration_ms": 1520,
       "known_upstream_unload_diagnostics": 0
     },
     {
       "browser": "webkit",
       "test": "reading layouts 360px dark",
       "status": "passed",
-      "duration_ms": 1567,
+      "duration_ms": 1480,
       "known_upstream_unload_diagnostics": 0
     },
     {
       "browser": "webkit",
       "test": "reading layouts 390px light",
       "status": "passed",
-      "duration_ms": 1658,
+      "duration_ms": 1514,
       "known_upstream_unload_diagnostics": 0
     },
     {
       "browser": "webkit",
       "test": "reading layouts 390px dark",
       "status": "passed",
-      "duration_ms": 1585,
+      "duration_ms": 1524,
       "known_upstream_unload_diagnostics": 0
     },
     {
       "browser": "webkit",
       "test": "reading layouts 768px light",
       "status": "passed",
-      "duration_ms": 1565,
+      "duration_ms": 1519,
       "known_upstream_unload_diagnostics": 0
     },
     {
       "browser": "webkit",
       "test": "reading layouts 768px dark",
       "status": "passed",
-      "duration_ms": 1557,
+      "duration_ms": 1531,
       "known_upstream_unload_diagnostics": 0
     },
     {
       "browser": "webkit",
       "test": "reading layouts 1280px light",
       "status": "passed",
-      "duration_ms": 1746,
+      "duration_ms": 1608,
       "known_upstream_unload_diagnostics": 0
     },
     {
       "browser": "webkit",
       "test": "reading layouts 1280px dark",
       "status": "passed",
-      "duration_ms": 1663,
+      "duration_ms": 1669,
       "known_upstream_unload_diagnostics": 0
     },
     {
       "browser": "webkit",
       "test": "reading layouts 1920px light",
       "status": "passed",
-      "duration_ms": 1199,
+      "duration_ms": 1177,
       "known_upstream_unload_diagnostics": 0
     },
     {
       "browser": "webkit",
       "test": "reading layouts 1920px dark",
       "status": "passed",
-      "duration_ms": 1190,
+      "duration_ms": 1192,
       "known_upstream_unload_diagnostics": 0
     },
     {
       "browser": "webkit",
       "test": "anonymous and reader ACLs, discovery and native source view",
       "status": "passed",
-      "duration_ms": 2263,
+      "duration_ms": 2184,
       "known_upstream_unload_diagnostics": 0
     },
     {
       "browser": "webkit",
       "test": "search, index, recent changes, backlinks, revisions and diff",
       "status": "passed",
-      "duration_ms": 1026,
+      "duration_ms": 1016,
       "known_upstream_unload_diagnostics": 0
     },
     {
       "browser": "webkit",
       "test": "Recent Changes and diff dropdowns remain usable after core initialization",
       "status": "passed",
-      "duration_ms": 1063,
+      "duration_ms": 978,
       "known_upstream_unload_diagnostics": 0
     },
     {
       "browser": "webkit",
       "test": "create, repeated accurate preview without saving, summary, save, cancel and toolbar",
       "status": "passed",
-      "duration_ms": 6103,
+      "duration_ms": 6092,
       "known_upstream_unload_diagnostics": 3
     },
     {
       "browser": "webkit",
       "test": "section editing preserves surrounding sections",
       "status": "passed",
-      "duration_ms": 3124,
-      "known_upstream_unload_diagnostics": 1
+      "duration_ms": 3268,
+      "known_upstream_unload_diagnostics": 2
     },
     {
       "browser": "webkit",
       "test": "restoring an old revision requires confirmation and preserves Cancel",
       "status": "passed",
-      "duration_ms": 4942,
+      "duration_ms": 4729,
       "known_upstream_unload_diagnostics": 2
     },
     {
       "browser": "webkit",
       "test": "native draft refresh, recovery, unsaved warning and locks",
       "status": "passed",
-      "duration_ms": 3525,
+      "duration_ms": 3693,
       "known_upstream_unload_diagnostics": 3
     },
     {
       "browser": "webkit",
       "test": "conflicting edits retain both versions until the user decides",
       "status": "passed",
-      "duration_ms": 4659,
+      "duration_ms": 4788,
       "known_upstream_unload_diagnostics": 3
     },
     {
       "browser": "webkit",
       "test": "optional plugins render in article and repeated server previews",
       "status": "passed",
-      "duration_ms": 3191,
+      "duration_ms": 3251,
       "known_upstream_unload_diagnostics": 1
     },
     {
       "browser": "webkit",
       "test": "media popup upload and insertion, fullscreen manager and image detail",
       "status": "passed",
-      "duration_ms": 4099,
+      "duration_ms": 4231,
       "known_upstream_unload_diagnostics": 1
     },
     {
       "browser": "webkit",
       "test": "media previews fit automatically sized panels and enlarged text reflows",
       "status": "passed",
-      "duration_ms": 1391,
+      "duration_ms": 1383,
       "known_upstream_unload_diagnostics": 0
     },
     {
       "browser": "webkit",
       "test": "highlighted code and native feedback keep readable palette contrast",
       "status": "passed",
-      "duration_ms": 476,
+      "duration_ms": 505,
       "known_upstream_unload_diagnostics": 0
     },
     {
       "browser": "webkit",
       "test": "profile, subscriptions and bundled administration screens",
       "status": "passed",
-      "duration_ms": 3643,
+      "duration_ms": 3691,
       "known_upstream_unload_diagnostics": 0
     },
     {
       "browser": "webkit",
       "test": "profile update, account logout and password-reset form",
       "status": "passed",
-      "duration_ms": 2542,
+      "duration_ms": 2385,
       "known_upstream_unload_diagnostics": 0
     },
     {
       "browser": "webkit",
       "test": "200% text zoom, RTL directions and print",
       "status": "passed",
-      "duration_ms": 597,
+      "duration_ms": 644,
       "known_upstream_unload_diagnostics": 0
     },
     {
       "browser": "webkit",
       "test": "template configuration, disabled actions, include hooks and local style overrides",
       "status": "passed",
-      "duration_ms": 1580,
+      "duration_ms": 1547,
       "known_upstream_unload_diagnostics": 0
     }
   ]

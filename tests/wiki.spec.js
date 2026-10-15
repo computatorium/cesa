@@ -669,8 +669,9 @@ test('create, repeated accurate preview without saving, summary, save, cancel an
     await expect(page.locator('#link__wiz_result')).toHaveCSS('color', 'rgb(222, 222, 215)');
     await page.locator('#link__wiz_entry').fill('essay');
     await page.locator('#link__wiz_entry').press('End');
-    await expect(page.locator('#link__wiz_result a').first()).toBeVisible();
-    await page.locator('#link__wiz_result a').first().click();
+    const essayLink = page.locator('#link__wiz_result a[title="essay"]');
+    await expect(essayLink).toBeVisible();
+    await essayLink.click();
     await expect(page.locator('#wiki__text')).toHaveValue(/\[\[:?essay/);
     await expect(page.locator('#link__wiz')).toBeHidden();
     await cancel(page);

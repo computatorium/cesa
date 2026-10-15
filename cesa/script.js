@@ -307,12 +307,14 @@
             });
         });
         // Place core's footnote popup outside the link's hit area.
+        var footnoteTimer;
         document.addEventListener('mouseover', function (event) {
             var link = event.target.closest('a.fn_top'), popup = document.getElementById('insitu__fn');
             if (!popup || !window.jQuery) return;
+            clearTimeout(footnoteTimer);
             if (!link) {
-                if (!popup.contains(event.target)) setTimeout(function () {
-                    if (!popup.matches(':hover') && !document.querySelector('a.fn_top:hover')) jQuery(popup).hide().attr('aria-hidden', 'true');
+                if (!popup.contains(event.target)) footnoteTimer = setTimeout(function () {
+                    jQuery(popup).hide().attr('aria-hidden', 'true');
                 }, 120);
                 return;
             }
