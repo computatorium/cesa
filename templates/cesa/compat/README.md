@@ -30,4 +30,4 @@ touch conf/local.php
 
 Reload the browser after patching. Restore the backed-up plugin directory to roll back.
 
-The test fixture pins the exact source commits and applies both patches before running its checks. See [sources.json](https://github.com/computatorium/cesa/blob/main/tools/sources.json).
+The test fixture pins the exact source commits and applies both patches before running its checks. See [sources.json](https://github.com/computatorium/cesa/blob/main/templates/tools/sources.json).

@@ -8,6 +8,5 @@ __pycache__/
 /docs/screenshots/*
 !/docs/screenshots/light.png
 !/docs/screenshots/dark.png
-!/dist/
-!/dist/**
+/dist/
 .DS_Store
