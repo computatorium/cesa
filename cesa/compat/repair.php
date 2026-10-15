@@ -25,6 +25,8 @@ function cesa_compat_specs(): array
 
 function cesa_compat_file(array $spec): ?string
 {
+    // PHP workers can retain paths changed by another process or an extension update.
+    clearstatcache(true);
     $root = realpath(DOKU_PLUGIN);
     if ($root === false) return null;
     $file = $root . '/' . $spec['file'];

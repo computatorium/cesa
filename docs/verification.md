@@ -40,7 +40,7 @@ Exact commits and archive checksums are pinned in [sources.json](../tools/source
 
 The fixture applies the [optional patches](../cesa/compat/README.md) to the pinned Confmanager and Hiding IPs sources. All checks retain `E_ALL`. Patch hashes are included in the verification record. Confmanager's original constructor emits a PHP 8.2 deprecation, and Hiding IPs' old revision/recent hooks do not run on Mort. Both issues also occur with the stock template. External favicon requests use a local test response so the icon checks do not depend on the favicon service.
 
-Repair tests disable the two plugins while restoring their original files, then exercise PHP repairs and rollback under `E_ALL`. A separate PHP 8.2 check reproduces stale execution with OPCache timestamp checks and API access disabled, and verifies that the repair reports a required hosting cache reset.
+Repair tests disable the two plugins while restoring their original files, then exercise PHP repairs and rollback under `E_ALL`. A separate PHP 8.2 check reproduces a cached path after another process replaces a symlink, and verifies fresh path validation. It also reproduces stale execution with OPCache timestamp checks and API access disabled, and verifies that the repair reports a required hosting cache reset.
 
 Mort's native draft cleanup issues an asynchronous POST during unload. WebKit can reject it with `ajax.php due to access control checks`. The same diagnostic was reproduced with the stock template; see [evidence](upstream-unload.json) and `node tools/upstream-unload.js`. The suite ignores that exact message in WebKit and fails on other uncaught page errors. Draft/save/cancel checks still run.
 

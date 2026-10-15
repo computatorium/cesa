@@ -1019,6 +1019,7 @@ test('extension and ACL managers keep usable columns, details and controls on ph
     const original = await fs.readFile(plugins);
     try {
         await page.goto(`${url('start', 'admin')}&page=extension`);
+        await expect(page.getByRole('link', { name: 'Plugin compatibility', exact: true })).toHaveAttribute('href', '/lib/tpl/cesa/compat.php');
         const popularity = page.locator('section.extension').filter({ has: page.locator('.screenshot .id').filter({ hasText: /^popularity$/ }) });
         await popularity.getByRole('button', { name: 'Disable', exact: true }).click();
         await expect(popularity).toHaveClass(/disabled/);
@@ -1326,8 +1327,7 @@ test('administrator PHP repair requires CSRF, verifies files and backups, and re
     }
     try {
         await login(page, 'admin');
-        await page.goto(`${url('start', 'admin')}&page=extension`);
-        await page.getByRole('link', { name: 'Plugin compatibility', exact: true }).click();
+        await page.goto(endpoint);
         await expect(page.locator('h1')).toHaveText('Plugin compatibility');
         try {
             await atomicWrite('.dev/wiki/conf/local.php', Buffer.concat([local, Buffer.from("\n$conf['disableactions'] = 'admin';\n")]));

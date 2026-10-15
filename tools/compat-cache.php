@@ -17,6 +17,16 @@ io_mkdir_p(DOKU_PLUGIN . 'confmanager/configTypes');
 try {
     $file = DOKU_PLUGIN . 'confmanager/configTypes/ConfigManagerTwoLine.php';
     copy(dirname(__DIR__) . '/.dev/original-plugins/confmanager/configTypes/ConfigManagerTwoLine.php', $file);
+    $original = $scratch . '/original.php';
+    copy($file, $original);
+    unlink($file);
+    symlink($original, $file);
+    require_check(cesa_compat_file(cesa_compat_specs()['confmanager']) === null, 'Linked plugin file was accepted.');
+    $process = proc_open([PHP_BINARY, '-r', 'unlink($argv[1]);copy($argv[2],$argv[1]);', $file, $original], [], $pipes);
+    require_check(is_resource($process) && proc_close($process) === 0, 'Cannot replace the linked fixture externally.');
+    require_check(realpath($file) === $original, 'PHP did not retain the external path change in this fixture.');
+    require_check(cesa_compat_file(cesa_compat_specs()['confmanager']) === $file, 'Repair retained a stale linked path.');
+    echo "PHP path cache: external link replacement reproduced; repair validates the current path.\n";
     $canary = $scratch . '/canary.php';
     file_put_contents($canary, '<?php return "old";');
     touch($canary, time() - 10);
