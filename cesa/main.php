@@ -49,6 +49,9 @@ $hasRail = $hasSidebar || $toc !== '';
         <?php endif ?>
         <main id="dokuwiki__content" tabindex="-1">
             <?php html_msgarea() ?>
+            <?php if ($ACT === 'admin' && $INPUT->str('page') === 'extension' && auth_isadmin()): ?>
+            <p><a href="<?php echo hsc(tpl_basedir() . 'compat.php') ?>">Plugin compatibility</a></p>
+            <?php endif ?>
             <?php cesa_page_actions() ?>
             <div class="page group">
                 <?php tpl_includeFile('pageheader.html') ?>

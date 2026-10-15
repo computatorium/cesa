@@ -26,6 +26,10 @@ expected = template_bytes(ROOT / 'cesa')
 actual = template_bytes(installed)
 if expected != actual:
     raise SystemExit('Installed archive differs from the template source.')
+run('docker', 'compose', 'exec', '-T', '-w', '/workspace', 'wiki', 'php',
+    '-d', 'opcache.enable_cli=1', '-d', 'opcache.validate_timestamps=0',
+    '-d', 'opcache.file_update_protection=0', '-d', 'opcache.restrict_api=/cesa-no-api',
+    'tools/compat-cache.php')
 run('npm', 'test')
 run(sys.executable, 'tools/check.py')
 run(sys.executable, 'tools/report.py')

@@ -16,6 +16,7 @@ Coverage includes:
 - Form controls, named option groups, reassigned-form resets, removal/reinsertion, and shared header control fonts and sizing.
 - Configuration, disabled actions, include hooks, palette overrides, optional Wrap/MathJax rendering, PHP syntax/runtime diagnostics, and compressed template asset budgets.
 - Linkfavicon icons in articles, navigation, and previews; CMS mode's anonymous controls; Hiding IPs' revision output; Confmanager selection, save/delete, and icon dialogs; mobile Extension Manager and ACL controls.
+- Browser-based plugin repair and restoration without JavaScript; administrator access, CSRF rejection, checksums, read-only/linked files, corrupted backups, and the source-linked template entry point.
 
 The gzip limits are 40 KiB CSS and 5 KiB JavaScript, excluding core/plugins. CSS is compiled with Mort's pipeline. The JavaScript figure sums three separately gzipped parts: the inline appearance script, `script.js` after Mort's JSStrip minifier, and locale strings. Raw source gzip bytes are recorded too.
 
@@ -38,6 +39,8 @@ Exact commits and archive checksums are pinned in [sources.json](../tools/source
 ## Upstream behavior
 
 The fixture applies the [optional patches](../cesa/compat/README.md) to the pinned Confmanager and Hiding IPs sources. All checks retain `E_ALL`. Patch hashes are included in the verification record. Confmanager's original constructor emits a PHP 8.2 deprecation, and Hiding IPs' old revision/recent hooks do not run on Mort. Both issues also occur with the stock template. External favicon requests use a local test response so the icon checks do not depend on the favicon service.
+
+Repair tests disable the two plugins while restoring their original files, then exercise PHP repairs and rollback under `E_ALL`. A separate PHP 8.2 check reproduces stale execution with OPCache timestamp checks and API access disabled, and verifies that the repair reports a required hosting cache reset.
 
 Mort's native draft cleanup issues an asynchronous POST during unload. WebKit can reject it with `ajax.php due to access control checks`. The same diagnostic was reproduced with the stock template; see [evidence](upstream-unload.json) and `node tools/upstream-unload.js`. The suite ignores that exact message in WebKit and fails on other uncaught page errors. Draft/save/cancel checks still run.
 

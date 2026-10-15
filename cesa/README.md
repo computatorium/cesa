@@ -49,7 +49,7 @@ Wrap and the legacy MathJax 2 plugin have optional compatibility styles. Install
 
 Linkfavicon, Confmanager, and the bundled administration screens have compatibility styles for both palettes and small screens. CMS mode's disabled actions and Hiding IPs' output hooks remain under plugin control. Authentication plugins use DokuWiki's normal forms and settings.
 
-Older Confmanager and Hiding IPs releases need the [optional compatibility patches](compat/README.md) for PHP 8.2 and Mort. Installing the template does not apply them.
+Older Confmanager and Hiding IPs releases need [compatibility repairs](compat/README.md) for PHP 8.2 and Mort. Administrators can apply them through the **Plugin compatibility** link in Extension Manager. The repair uses PHP, saves verified originals for restoration, and requires no shell access. Installing the template does not change plugin files by itself.
 
 ## Upgrade or roll back
 

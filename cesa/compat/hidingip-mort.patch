@@ -21,8 +21,8 @@
 +    }
 +
 +    public function mortdiff(Doku_Event $event, $param) {
-+        global $INPUT;
-+        if ($INPUT->str('do') === 'diff') $event->data = $this->maskUserIPs($event->data);
++        global $ACT;
++        if ($ACT === 'diff') $event->data = $this->maskUserIPs($event->data);
 +    }
 +
 +    private function maskUserIPs($html) {
@@ -42,10 +42,13 @@
      }
  
      /**
-@@ -167,5 +199,5 @@
+@@ -167,8 +199,8 @@
          // 　　例：3.57.2.13
  
  
 -        if (preg_match('/^(([1-9]?[0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([1-9]?[0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$/' , $event->data['username']) == 1) $event->data['name'] = $display;
 +        if (filter_var($event->data['username'], FILTER_VALIDATE_IP) !== false) $event->data['name'] = $display;
      }
+ 
+ 
+ }

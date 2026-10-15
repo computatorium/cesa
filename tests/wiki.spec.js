@@ -1,7 +1,7 @@
 const { test, expect } = require('@playwright/test');
 const fs = require('node:fs/promises');
 const path = require('node:path');
-const { base, atomicWrite } = require('../tools/fixture');
+const { base, atomicWrite, removeFile } = require('../tools/fixture');
 const evidence = require('../tools/evidence');
 const password = 'cesa-test-only';
 const uid = (testInfo, name) => `test:${testInfo.project.name}_${name}_${Date.now()}`;
@@ -23,6 +23,7 @@ async function login(page, user = 'editor') {
     await page.locator('input[name="p"]').fill(password);
     await page.locator('#dw__login button[type="submit"]').click();
     await expect(page.locator('#dokuwiki__top')).toHaveClass(/loggedIn/);
+    await page.waitForLoadState('load');
 }
 async function save(page, id, text, summary = 'Browser workflow') {
     await page.goto(url(id, 'edit'));
@@ -30,6 +31,7 @@ async function save(page, id, text, summary = 'Browser workflow') {
     await page.locator('#edit__summary').fill(summary);
     await page.locator('#edbtn__save').click();
     await expect(page.locator('#dokuwiki__top')).toHaveClass(/mode_show/);
+    await page.waitForLoadState('load');
 }
 async function raw(page, id) {
     return (await page.request.get(url(id, 'export_raw'))).text();
@@ -40,6 +42,7 @@ async function cancel(page) {
     page.on('dialog', handler);
     await page.locator('button[name="do[cancel]"]').click();
     await expect(page.locator('#wiki__text')).toHaveCount(0);
+    await page.waitForLoadState('load');
     page.off('dialog', handler);
 }
 async function noOverflow(page) {
@@ -506,7 +509,7 @@ test('no JavaScript: reading, disclosure navigation, login and server preview/sa
     await p.goto(url('history', 'recent'));
     const recent = p.locator('select[name="show_changes"]');
     await expect(recent).toBeVisible();
-    expect(await recent.evaluate(e => getComputedStyle(e).backgroundImage)).toContain('linear-gradient');
+    await expect(recent).toHaveCSS('background-image', /linear-gradient/);
     await recent.evaluate(e => e.setAttribute('dir', 'rtl'));
     const caret = await recent.evaluate(e => {
         const style = getComputedStyle(e);
@@ -1070,6 +1073,23 @@ test('cmsmode settings and Hiding IPs retain their native permission hooks', asy
         await expect(page.locator('.page')).not.toContainText('2001:db8::17');
         await expect(page.locator('.page')).not.toContainText('203.0.113.17');
     }
+    for (const [target, options] of [
+        ['/doku.php?id=privacy&do%5Bdiff%5D=1', {}],
+        [url('privacy'), { headers: { 'X-DokuWiki-Do': 'diff' } }],
+    ]) {
+        const html = await (await page.request.get(target, options)).text();
+        expect(html).toContain('mode_diff');
+        expect(html).not.toContain('203.0.113.17');
+        expect(html).not.toContain('2001:db8::17');
+    }
+    await page.goto(url('privacy', 'revisions'));
+    await page.locator('input[name="rev2[]"]').nth(0).check();
+    await page.locator('input[name="rev2[]"]').nth(1).check();
+    await page.locator('button[name="do[diff]"]').click();
+    await expect(page.locator('#dokuwiki__top')).toHaveClass(/mode_diff/);
+    await page.waitForLoadState('load');
+    await expect(page.locator('.page')).not.toContainText('203.0.113.17');
+    await expect(page.locator('.page')).not.toContainText('2001:db8::17');
     await login(page, 'admin');
     await page.goto(url('privacy', 'revisions'));
     await expect(page.locator('.page')).toContainText('203.0.113.17');
@@ -1138,7 +1158,7 @@ test('confmanager keeps native selection, save, icon dialog and deletion usable'
     } finally {
         for (const [name, data] of original) {
             const target = path.join(conf, name);
-            if (data === null) await fs.rm(target, { force: true });
+            if (data === null) await removeFile(target);
             else await atomicWrite(target, data);
         }
     }
@@ -1268,7 +1288,7 @@ $conf['sidebar'] = 'absent_sidebar';
         await expect(page.locator('#dokuwiki__top')).toHaveCSS('--article-width', '88ch');
     } finally {
         for (const [target, original] of originals) {
-            if (original === null) await fs.unlink(target);
+            if (original === null) await removeFile(target);
             else {
                 await atomicWrite(target, original);
             }
@@ -1278,5 +1298,123 @@ $conf['sidebar'] = 'absent_sidebar';
         const local = path.join(conf, 'local.php');
         const stamp = Math.ceil(Math.max(Date.now(), (await fs.stat(local)).mtimeMs) / 1000) + 1;
         await fs.utimes(local, stamp, stamp);
+    }
+});
+
+test('administrator PHP repair requires CSRF, verifies files and backups, and restores originals without JavaScript', async ({ browser, page: jsPage }, testInfo) => {
+    const endpoint = '/lib/tpl/cesa/compat.php';
+    for (const user of [null, 'reader', 'editor']) {
+        const context = await browser.newContext({ baseURL: base, javaScriptEnabled: false });
+        try {
+            if (user) await login(await context.newPage(), user);
+            expect((await context.request.get(endpoint)).status()).toBe(403);
+            expect((await context.request.post(endpoint, { form: { action: 'repair', plugin: 'hidingip' } })).status()).toBe(403);
+        } finally {
+            await context.close();
+        }
+    }
+    const context = await browser.newContext({ baseURL: base, javaScriptEnabled: false, viewport: { width: 390, height: 844 } });
+    const page = await context.newPage();
+    const plugins = path.resolve('.dev/wiki/conf/plugins.local.php');
+    const pluginConfig = await fs.readFile(plugins);
+    const local = await fs.readFile('.dev/wiki/conf/local.php');
+    const backupDirectory = path.resolve('.dev/wiki/data/meta/_cesa_compat');
+    const files = new Map();
+    for (const [id, relative] of [['confmanager', 'configTypes/ConfigManagerTwoLine.php'], ['hidingip', 'action.php']]) {
+        const target = path.resolve('.dev/wiki/lib/plugins', id, relative);
+        files.set(id, { target, fixed: await fs.readFile(target), original: await fs.readFile(path.join('.dev/original-plugins', id, relative)) });
+    }
+    try {
+        await login(page, 'admin');
+        await page.goto(`${url('start', 'admin')}&page=extension`);
+        await page.getByRole('link', { name: 'Plugin compatibility', exact: true }).click();
+        await expect(page.locator('h1')).toHaveText('Plugin compatibility');
+        try {
+            await atomicWrite('.dev/wiki/conf/local.php', Buffer.concat([local, Buffer.from("\n$conf['disableactions'] = 'admin';\n")]));
+            expect((await page.request.get(endpoint)).status()).toBe(403);
+        } finally {
+            await atomicWrite('.dev/wiki/conf/local.php', local);
+        }
+        // Keep the old PHP signature out of startup while testing its file repair under E_ALL.
+        await atomicWrite(plugins, Buffer.concat([pluginConfig, Buffer.from("\n$plugins['confmanager'] = 0;\n$plugins['hidingip'] = 0;\n")]));
+        for (const file of files.values()) await atomicWrite(file.target, file.original);
+        await page.goto(`${endpoint}?action=repair&plugin=hidingip`);
+        await expect(page.locator('[data-plugin="hidingip"] .compat-status')).toContainText('repair available');
+        const token = await page.locator('input[name="sectok"]').first().inputValue();
+        const hiding = files.get('hidingip');
+        expect((await page.request.post(endpoint, { form: { action: 'repair', plugin: 'hidingip' } })).status()).toBe(403);
+        expect(await fs.readFile(hiding.target)).toEqual(hiding.original);
+        expect((await page.request.post(endpoint, { form: { action: 'repair', plugin: '../../conf/local.php', sectok: token } })).status()).toBe(409);
+        const changed = Buffer.concat([hiding.original, Buffer.from('\n// Local modification.\n')]);
+        await atomicWrite(hiding.target, changed);
+        expect((await page.request.post(endpoint, { form: { action: 'repair', plugin: 'hidingip', sectok: token } })).status()).toBe(409);
+        expect(await fs.readFile(hiding.target)).toEqual(changed);
+        await atomicWrite(hiding.target, hiding.original);
+        await fs.unlink(hiding.target);
+        await fs.symlink(path.relative(path.dirname(hiding.target), path.resolve('.dev/original-plugins/hidingip/action.php')), hiding.target);
+        expect((await page.request.post(endpoint, { form: { action: 'repair', plugin: 'hidingip', sectok: token } })).status()).toBe(409);
+        await fs.unlink(hiding.target);
+        await atomicWrite(hiding.target, hiding.original);
+        await fs.chmod(hiding.target, 0o444);
+        expect((await page.request.post(endpoint, { form: { action: 'repair', plugin: 'hidingip', sectok: token } })).status()).toBe(409);
+        expect(await fs.readFile(hiding.target)).toEqual(hiding.original);
+        await fs.chmod(hiding.target, 0o644);
+        for (const [id, file] of files) {
+            await page.goto(endpoint);
+            const row = page.locator(`[data-plugin="${id}"]`);
+            await row.getByRole('button', { name: 'Repair', exact: true }).click();
+            await expect(row.locator('.compat-status')).toHaveText('Compatible file on disk.');
+            await page.waitForLoadState('load');
+            expect(await fs.readFile(file.target)).toEqual(file.fixed);
+            const backup = path.join(backupDirectory, (await fs.readdir(backupDirectory)).find(name => name.startsWith(`${id}-`) && name.endsWith('.bak')));
+            expect(await fs.readFile(backup)).toEqual(file.original);
+            expect((await fs.stat(backup)).mode & 0o777).toBe(0o600);
+            expect((await page.request.get(`/data/meta/_cesa_compat/${path.basename(backup)}`)).status()).toBe(403);
+            expect((await page.request.post(endpoint, { form: { action: 'repair', plugin: id, sectok: token } })).status()).toBe(409);
+            await fs.writeFile(backup, 'Invalid backup');
+            expect((await page.request.post(endpoint, { form: { action: 'restore', plugin: id, sectok: token } })).status()).toBe(409);
+            expect(await fs.readFile(file.target)).toEqual(file.fixed);
+            await fs.writeFile(backup, file.original);
+            await row.getByRole('button', { name: 'Restore original', exact: true }).click();
+            await expect(row.locator('.compat-status')).toContainText('repair available');
+            await page.waitForLoadState('load');
+            expect(await fs.readFile(file.target)).toEqual(file.original);
+            await row.getByRole('button', { name: 'Repair', exact: true }).click();
+            await expect(row.locator('.compat-status')).toHaveText('Compatible file on disk.');
+            await page.waitForLoadState('load');
+            await noOverflow(page);
+        }
+        await login(jsPage, 'admin');
+        await jsPage.goto(endpoint);
+        await expect(jsPage.locator('h1')).toHaveText('Plugin compatibility');
+        for (const width of [390, 1280]) {
+            await jsPage.setViewportSize({ width, height: 960 });
+            for (const appearance of ['light', 'dark']) {
+                await setAppearance(jsPage, appearance);
+                await noOverflow(jsPage);
+                if (testInfo.project.name === 'chromium') await jsPage.screenshot({ path: `docs/screenshots/chromium-repair-${width}-${appearance}.png` });
+            }
+        }
+        const template = path.resolve('.dev/wiki/lib/tpl/cesa');
+        const extracted = template + '.repair-test';
+        await fs.rename(template, extracted);
+        try {
+            await fs.symlink(path.relative(path.dirname(template), path.resolve('cesa')), template, 'dir');
+            const response = await page.goto(endpoint);
+            expect(response.status()).toBe(200);
+            await expect(page.locator('h1')).toHaveText('Plugin compatibility');
+        } finally {
+            await fs.unlink(template);
+            await fs.rename(extracted, template);
+        }
+        expect(await fs.readFile('.dev/wiki/conf/local.php')).toEqual(local);
+    } finally {
+        await context.close();
+        for (const file of files.values()) {
+            await fs.chmod(file.target, 0o644);
+            await atomicWrite(file.target, file.fixed);
+        }
+        await atomicWrite(plugins, pluginConfig);
+        await fs.rm(backupDirectory, { recursive: true, force: true });
     }
 });

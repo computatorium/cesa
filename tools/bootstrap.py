@@ -68,6 +68,10 @@ else:
 
 if not args.without_plugins:
     for name, patch in [('confmanager', 'confmanager-php82.patch'), ('hidingip', 'hidingip-mort.patch')]:
+        relative = 'configTypes/ConfigManagerTwoLine.php' if name == 'confmanager' else 'action.php'
+        original = DEV / 'original-plugins' / name / relative
+        original.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(wiki / 'lib/plugins' / name / relative, original)
         subprocess.run(['patch', '-p1', '-F0', '-t', '-i', str((tpl / 'compat' / patch).resolve())],
                        cwd=wiki / 'lib/plugins' / name, check=True)
     math = ROOT / 'node_modules/mathjax'
