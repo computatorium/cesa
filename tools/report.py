@@ -12,7 +12,7 @@ import subprocess
 import tarfile
 from urllib.parse import urlparse
 from template_files import template_bytes
-from release_info import ARCHIVE, VERSION
+from release_info import ARCHIVE, DIRECTORY_ENTRY, RELEASE_DATE, STABLE_ARCHIVE, VERSION, directory_entry
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -57,8 +57,11 @@ require(result['stats']['expected'] == len(expected) and
 
 archive = ARCHIVE
 archive_sha = sha(archive.read_bytes())
-require((ROOT / 'dist/SHA256SUMS').read_text() == f'{archive_sha}  {archive.name}\n',
+require(STABLE_ARCHIVE.read_bytes() == archive.read_bytes(), 'Stable archive differs from the versioned archive')
+require((ROOT / 'dist/SHA256SUMS').read_text() ==
+        ''.join(f'{archive_sha}  {file.name}\n' for file in [ARCHIVE, STABLE_ARCHIVE]),
         'Published checksum differs from the archive')
+require(DIRECTORY_ENTRY.read_text() == directory_entry(), 'DokuWiki listing metadata differs from the release')
 with tarfile.open(archive, 'r:gz') as package:
     members = package.getmembers()
     require(all(m.isfile() and m.name.startswith('cesa/') and '..' not in Path(m.name).parts for m in members),
@@ -96,6 +99,7 @@ php = subprocess.check_output(prefix + ['-r', 'echo PHP_VERSION;'], cwd=ROOT, te
 assets = json.loads(subprocess.check_output(prefix + ['tools/assets.php'], cwd=ROOT, text=True))
 report = {
     'version': VERSION,
+    'release_date': RELEASE_DATE,
     'recorded_utc': datetime.now(timezone.utc).isoformat(),
     'platform': platform.platform(), 'php': php,
     'browsers': versions, 'sources': json.loads((ROOT / 'tools/sources.json').read_text()),

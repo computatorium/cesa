@@ -1,6 +1,7 @@
 base     cesa
 author   Malcolm
 date     2026-10-15
+phpmin   8.2
 name     Cesa
 desc     A minimal DokuWiki template.
 url      https://github.com/computatorium/cesa

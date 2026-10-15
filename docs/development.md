@@ -29,9 +29,11 @@ In another terminal, use `CESA_NATIVE=1 npm test` and `python3 tools/check.py --
 
 ## Releases
 
-`python3 tools/release.py` writes `dist/cesa-<version>.tar.gz` and `dist/SHA256SUMS`, using the version in `package.json`. Only `cesa/` is packaged; hidden metadata is excluded. In a Git checkout, stage template changes before building. Sorted paths and fixed metadata make builds repeatable with the same Python/zlib toolchain.
+`python3 tools/release.py` writes identical `dist/cesa-<version>.tar.gz` and `dist/cesa.tar.gz` archives, plus `dist/SHA256SUMS` for both names. The version comes from `package.json`. Only `cesa/` is packaged; hidden metadata is excluded. In a Git checkout, stage template changes before building. Sorted paths and fixed metadata make builds repeatable with the same Python/zlib toolchain.
 
 File timestamps follow `template.info.txt`'s release date, or `SOURCE_DATE_EPOCH` when set. Advance the timestamp for each release so PHP's opcode cache can detect changed files.
+
+The date in `cesa/template.info.txt` is the source for the verification record, release notes, and generated `dist/dokuwiki.txt` directory entry. Use the actual release date in `YYYY-MM-DD` format; invalid and future dates are rejected. Copy the generated entry to `dokuwiki.org/template:cesa` when publishing a stable release. It uses the permanent download link `https://github.com/computatorium/cesa/releases/latest/download/cesa.tar.gz`. DokuWiki detects updates by date, so same-day releases use **Reinstall** instead of a new **Update** notice.
 
 After building the Docker image, `python3 tools/verify-release.py` checks reproducibility, installs clean archives without and with optional plugins, runs the browser suite and PHP/asset checks, and writes `docs/verification-results.json`. It replaces the disposable fixture.
 
@@ -43,7 +45,7 @@ To resume source development, bootstrap without `--archive`, or sync `cesa/` int
 
 ## GitHub Actions
 
-Pushes to `main`, pull requests, and manual runs build and verify the archive on Ubuntu with PHP 8.2 and all three browser engines. The run saves the archive, checksum, and verification record as an artifact. A matching `v<version>` tag also publishes those files to GitHub Releases. Only the release job has write permission; it uses the built-in token.
+Pushes to `main`, pull requests, and manual runs build and verify the archives on Ubuntu with PHP 8.2 and all three browser engines. The run saves both archive names, checksums, directory entry, and verification record as an artifact. A matching `v<version>` tag also publishes those files to GitHub Releases. Only the release job has write permission; it uses the built-in token.
 
 To prepare a release, update the template's release date, then:
 

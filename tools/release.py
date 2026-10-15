@@ -7,11 +7,10 @@ import os
 from datetime import datetime, timezone
 import tarfile
 from template_files import template_files
-from release_info import ARCHIVE, ROOT
+from release_info import ARCHIVE, DIRECTORY_ENTRY, RELEASE_DATE, ROOT, STABLE_ARCHIVE, directory_entry
 
 files = template_files(ROOT / 'cesa', tracked=True)
-date = next(line.split(None, 1)[1] for line in (ROOT / 'cesa/template.info.txt').read_text().splitlines() if line.startswith('date '))
-epoch = int(os.environ.get('SOURCE_DATE_EPOCH', datetime.strptime(date, '%Y-%m-%d').replace(tzinfo=timezone.utc).timestamp()))
+epoch = int(os.environ.get('SOURCE_DATE_EPOCH', datetime.strptime(RELEASE_DATE, '%Y-%m-%d').replace(tzinfo=timezone.utc).timestamp()))
 output = io.BytesIO()
 with tarfile.open(fileobj=output, mode='w', format=tarfile.PAX_FORMAT, dereference=True) as archive:
     for name, file in files.items():
@@ -29,5 +28,7 @@ with destination.open('wb') as stream:
     with gzip.GzipFile(filename='', mode='wb', fileobj=stream, mtime=0, compresslevel=9) as compressed:
         compressed.write(output.getvalue())
 digest = hashlib.sha256(destination.read_bytes()).hexdigest()
-(destination.parent / 'SHA256SUMS').write_text(f'{digest}  {destination.name}\n')
+STABLE_ARCHIVE.write_bytes(destination.read_bytes())
+(destination.parent / 'SHA256SUMS').write_text(''.join(f'{digest}  {file.name}\n' for file in [ARCHIVE, STABLE_ARCHIVE]))
+DIRECTORY_ENTRY.write_text(directory_entry())
 print(f'{destination.relative_to(ROOT)}: {destination.stat().st_size} bytes; SHA256 {digest}')

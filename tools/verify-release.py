@@ -3,18 +3,20 @@
 import subprocess
 import sys
 from template_files import template_bytes
-from release_info import ARCHIVE, ROOT
+from release_info import ARCHIVE, DIRECTORY_ENTRY, ROOT, STABLE_ARCHIVE
 
 def run(*args):
     subprocess.run(args, cwd=ROOT, check=True)
 
+run(sys.executable, 'tools/test-release.py')
 run(sys.executable, 'tools/release.py')
-first = ARCHIVE.read_bytes()
+outputs = [ARCHIVE, STABLE_ARCHIVE, DIRECTORY_ENTRY, ROOT / 'dist/SHA256SUMS']
+first = {file: file.read_bytes() for file in outputs}
 run(sys.executable, 'tools/release.py')
-if first != ARCHIVE.read_bytes():
+if first != {file: file.read_bytes() for file in outputs}:
     raise SystemExit('Release is not reproducible.')
 run('docker', 'compose', 'down')
-run(sys.executable, 'tools/bootstrap.py', '--reset', '--archive', str(ARCHIVE), '--without-plugins')
+run(sys.executable, 'tools/bootstrap.py', '--reset', '--archive', str(STABLE_ARCHIVE), '--without-plugins')
 run('docker', 'compose', 'up', '-d', '--wait')
 run('node', 'tools/core-smoke.js')
 run(sys.executable, 'tools/check.py')
