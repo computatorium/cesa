@@ -5,11 +5,10 @@ import hashlib
 import io
 import os
 from datetime import datetime, timezone
-from pathlib import Path
 import tarfile
 from template_files import template_files
+from release_info import ARCHIVE, ROOT
 
-ROOT = Path(__file__).resolve().parents[1]
 files = template_files(ROOT / 'cesa', tracked=True)
 date = next(line.split(None, 1)[1] for line in (ROOT / 'cesa/template.info.txt').read_text().splitlines() if line.startswith('date '))
 epoch = int(os.environ.get('SOURCE_DATE_EPOCH', datetime.strptime(date, '%Y-%m-%d').replace(tzinfo=timezone.utc).timestamp()))
@@ -24,7 +23,7 @@ with tarfile.open(fileobj=output, mode='w', format=tarfile.PAX_FORMAT, dereferen
         info.pax_headers = {}
         with file.open('rb') as stream:
             archive.addfile(info, stream)
-destination = ROOT / 'dist/cesa-1.0.0.tar.gz'
+destination = ARCHIVE
 destination.parent.mkdir(exist_ok=True)
 with destination.open('wb') as stream:
     with gzip.GzipFile(filename='', mode='wb', fileobj=stream, mtime=0, compresslevel=9) as compressed:

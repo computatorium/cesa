@@ -4,6 +4,8 @@ The [test record](verification-results.json) contains the tested archive checksu
 
 The fixture runs DokuWiki 2026-07-14c “Mort” on PHP 8.2. Browser workflows run in Chromium, Firefox, and WebKit through Playwright. Reproduce them with the [development commands](development.md), or run `python3 tools/verify-release.py` for clean release installations.
 
+GitHub Actions runs the same checks for builds and version tags. Releases include `verification-results.json` from the publishing run, alongside the archive and checksum.
+
 Coverage includes:
 
 - Create, repeated preview without saving, save, cancel, section editing, toolbar, summaries, drafts, locks, and conflicting edits.

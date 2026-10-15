@@ -1,27 +1,25 @@
 #!/usr/bin/env python3
 """Build twice to check reproducibility, then verify installations without and with plugins."""
-from pathlib import Path
 import subprocess
 import sys
 from template_files import template_bytes
-
-ROOT = Path(__file__).resolve().parents[1]
+from release_info import ARCHIVE, ROOT
 
 def run(*args):
     subprocess.run(args, cwd=ROOT, check=True)
 
 run(sys.executable, 'tools/release.py')
-first = (ROOT / 'dist/cesa-1.0.0.tar.gz').read_bytes()
+first = ARCHIVE.read_bytes()
 run(sys.executable, 'tools/release.py')
-if first != (ROOT / 'dist/cesa-1.0.0.tar.gz').read_bytes():
+if first != ARCHIVE.read_bytes():
     raise SystemExit('Release is not reproducible.')
 run('docker', 'compose', 'down')
-run(sys.executable, 'tools/bootstrap.py', '--reset', '--archive', 'dist/cesa-1.0.0.tar.gz', '--without-plugins')
+run(sys.executable, 'tools/bootstrap.py', '--reset', '--archive', str(ARCHIVE), '--without-plugins')
 run('docker', 'compose', 'up', '-d', '--wait')
 run('node', 'tools/core-smoke.js')
 run(sys.executable, 'tools/check.py')
 run('docker', 'compose', 'down')
-run(sys.executable, 'tools/bootstrap.py', '--reset', '--archive', 'dist/cesa-1.0.0.tar.gz')
+run(sys.executable, 'tools/bootstrap.py', '--reset', '--archive', str(ARCHIVE))
 run('docker', 'compose', 'up', '-d', '--wait')
 installed = ROOT / '.dev/wiki/lib/tpl/cesa'
 expected = template_bytes(ROOT / 'cesa')

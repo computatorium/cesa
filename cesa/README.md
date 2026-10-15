@@ -4,7 +4,7 @@ A minimal template for DokuWiki 2026-07-14c “Mort”, requiring PHP 8.2+.
 
 ## Install
 
-Extract `cesa-1.0.0.tar.gz` into `lib/tpl/`. Select `cesa` in Configuration Manager, or add this to `conf/local.php`:
+Extract the Cesa release archive into `lib/tpl/`. Select `cesa` in Configuration Manager, or add this to `conf/local.php`:
 
 ```php
 $conf['template'] = 'cesa';

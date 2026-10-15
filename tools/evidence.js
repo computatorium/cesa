@@ -3,6 +3,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const { createHash } = require('node:crypto');
 const { base } = require('./fixture');
+const { version } = require('../package.json');
 const root = path.resolve(__dirname, '..');
 const sha = bytes => createHash('sha256').update(bytes).digest('hex');
 function tree(directory) {
@@ -20,7 +21,7 @@ function tree(directory) {
     return sha(files.sort().map(file => `${path.relative(directory, file).split(path.sep).join('/')}\0${sha(fs.readFileSync(file))}\n`).join(''));
 }
 module.exports = function evidence(browser) {
-    const archive = path.join(root, 'dist/cesa-1.0.0.tar.gz');
+    const archive = path.join(root, `dist/cesa-${version}.tar.gz`);
     const installed = path.join(root, '.dev/wiki/lib/tpl/cesa');
     return {
         browser_version: browser.version(),

@@ -4,7 +4,7 @@ A minimal DokuWiki template.
 # usage
 Requires DokuWiki 2026-07-14c “Mort” and PHP 8.2+.
 
-Extract [cesa-1.0.0.tar.gz](dist/cesa-1.0.0.tar.gz) into `lib/tpl/`, then select `cesa` in Configuration Manager.
+Extract the archive from the [latest release](https://github.com/computatorium/cesa/releases/latest) into `lib/tpl/`, then select `cesa` in Configuration Manager.
 
 [settings](cesa/README.md) · [light](docs/screenshots/light.png) · [dark](docs/screenshots/dark.png)
 

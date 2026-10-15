@@ -12,6 +12,7 @@ import subprocess
 import tarfile
 from urllib.parse import urlparse
 from template_files import template_bytes
+from release_info import ARCHIVE, VERSION
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -54,7 +55,7 @@ require(result['stats']['expected'] == len(expected) and
         all(result['stats'].get(key, 0) == 0 for key in ['skipped', 'unexpected', 'flaky']),
         'Latest run is incomplete or contains skipped, failed or flaky tests')
 
-archive = ROOT / 'dist/cesa-1.0.0.tar.gz'
+archive = ARCHIVE
 archive_sha = sha(archive.read_bytes())
 require((ROOT / 'dist/SHA256SUMS').read_text() == f'{archive_sha}  {archive.name}\n',
         'Published checksum differs from the archive')
@@ -94,6 +95,7 @@ prefix = ['php'] if os.environ.get('CESA_NATIVE') else ['docker', 'compose', 'ex
 php = subprocess.check_output(prefix + ['-r', 'echo PHP_VERSION;'], cwd=ROOT, text=True)
 assets = json.loads(subprocess.check_output(prefix + ['tools/assets.php'], cwd=ROOT, text=True))
 report = {
+    'version': VERSION,
     'recorded_utc': datetime.now(timezone.utc).isoformat(),
     'platform': platform.platform(), 'php': php,
     'browsers': versions, 'sources': json.loads((ROOT / 'tools/sources.json').read_text()),
