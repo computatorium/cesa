@@ -1,10 +1,16 @@
-name: Build
+name: Build templates
 
 on:
   push:
     branches: [main]
     tags: ['v*']
+    paths:
+      - 'templates/**'
+      - '.github/workflows/build-templates.yml'
   pull_request:
+    paths:
+      - 'templates/**'
+      - '.github/workflows/build-templates.yml'
   workflow_dispatch:
 
 permissions:
