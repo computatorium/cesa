@@ -58,7 +58,7 @@ li p { margin-block: .35em; }
 dt { font-weight: 600; }
 dd { margin-inline-start: 1.5em; }
 h1, h2, h3, h4, h5, h6 { line-height: 1.25; font-weight: 600; overflow-wrap: anywhere; }
-h1 { font-size: 1.875em; margin: 0 0 .65em; letter-spacing: -.025em; }
+h1 { font-size: 1.875em; margin: 1.1em 0 .5em; letter-spacing: -.025em; }
 h2 { font-size: 1.5em; margin: 1.15em 0 .5em; letter-spacing: -.015em; }
 h3 { font-size: 1.2em; margin: 1.1em 0 .5em; }
 h4, h5, h6 { font-size: 1em; margin: 1.3em 0 .5em; }
@@ -134,7 +134,9 @@ details[open] > summary::before { content: "−"; }
 #dw__toc { font: .875rem/1.5 var(--sans); margin-block-end: 1.5rem; }
 #dw__toc h3 { display: flex; align-items: center; gap: var(--space-1); font-size: 1em; color: var(--link); cursor: pointer; }
 .page { font: var(--font-article)/1.6 var(--serif); overflow-wrap: anywhere; }
-.page > h1:first-child { margin-top: 0; }
+h1:first-child { margin-top: 0; }
+.page > .section_highlight_wrapper:first-child > h1:first-child { margin-top: 0; }
+.page > .section_highlight_wrapper:not(:first-child) > h1:first-child { margin-top: 1.1em; }
 #dokuwiki__footer { border-block-start: 1px solid var(--border); padding-block: var(--space-2); margin-block-start: var(--space-3); color: var(--muted); font: var(--font-small)/1.5 var(--sans); }
 .cesa-footer-meta { margin: 0; }
 code, pre, kbd, samp { font-family: var(--mono); font-size: .85em; }
@@ -276,9 +278,19 @@ label.block .cesa-select, .diffnav .cesa-select { width: 100%; }
 #size__ctl button { padding: .3rem; }
 .preview { font: var(--font-article)/1.6 var(--serif); max-width: var(--article-width, 88ch); margin: var(--space-6) auto; border-block-start: 1px solid var(--border); padding-block-start: var(--space-6); }
 .preview > h2:first-child { font: 600 1rem var(--sans); color: var(--muted); }
-.secedit { display: flex; justify-content: flex-end; margin-block: -.4rem .8rem; }
+.secedit { display: flex; justify-content: flex-end; margin-block: -.75em .25em; }
 .secedit form { margin: 0; }
-.secedit button { font: .75rem var(--sans); min-height: 2rem; padding: .2rem .5rem; }
+.secedit button { font: .75rem var(--sans); min-height: 1.75rem; padding: .1rem .5rem; color: var(--muted); background: transparent; }
+.secedit button:hover, .secedit button:focus-visible { color: var(--text); background: var(--surface); }
+/* With JavaScript, pin heading section buttons beside their heading so they add no vertical space. */
+.section_highlight_wrapper { position: relative; }
+.section_highlight_wrapper:has(> :is(h1, h2, h3, h4, h5, h6):first-child) > :first-child { padding-inline-end: 4rem; }
+.section_highlight_wrapper:has(> :is(h1, h2, h3, h4, h5, h6):first-child) > .secedit { position: absolute; inset-block-start: 0; inset-inline-end: 0; align-items: center; height: var(--secedit-row, auto); margin: 0; }
+/* Each row height matches its heading's line box: font-size × line-height 1.25. */
+.section_highlight_wrapper:has(> h1:first-child) { --secedit-row: 2.344em; }
+.section_highlight_wrapper:has(> h2:first-child) { --secedit-row: 1.875em; }
+.section_highlight_wrapper:has(> h3:first-child) { --secedit-row: 1.5em; }
+.section_highlight_wrapper:has(> :is(h4, h5, h6):first-child) { --secedit-row: 1.25em; }
 .section_highlight { background: var(--surface); }
 .picker, .ui-dialog, .JSpopup, #link__wiz { background: var(--bg); color: var(--text); border: 1px solid var(--border); }
 .picker { max-width: ~"min(22rem, 95vw)"; padding: .5rem; }
@@ -505,6 +517,7 @@ summary::before, #index__tree a.idx_dir::before, #media__tree .cesa-tree-toggle,
     .cesa-site-actions { gap: 0 var(--space-4); }
     #tool__bar button, .editButtons button { min-width: var(--control-height); }
     h1 { font-size: 1.75em; }
+    .section_highlight_wrapper:has(> h1:first-child) { --secedit-row: 2.1875em; }
     .footnotes { font-size: 1rem; }
     #wiki__text { min-height: 55vh; padding: .7rem; }
     .editBar .summary { display: block; }
